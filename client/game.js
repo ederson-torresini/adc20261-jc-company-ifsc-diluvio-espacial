@@ -1,8 +1,8 @@
-import config from "./config/config.js";
-import scene0 from "./scenes/scene0.js";
-import scene1 from "./scenes/scene1.js";
-import scene2 from "./scenes/scene2.js";
-import start from "./scenes/start.js";
+import config from "./config.js";
+import scene0 from "./scene0.js";
+import scene1 from "./scene1.js";
+import scene2 from "./scene2.js";
+import start from "./start.js";
 
 
 class Game extends Phaser.Game {

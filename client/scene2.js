@@ -15,7 +15,6 @@ class scene2 extends Phaser.Scene {
     this.load.image('CloudsFront', 'assets/fase2/jogo-boi/FreePlatformerNA/Background/CloudsFront.png');
     this.load.image('Tileset', 'assets/fase2/jogo-boi/FreePlatformerNA/Foreground/Tileset.png');
     this.load.image('TilesExamples', 'assets/fase2/jogo-boi/FreePlatformerNA/Foreground/TilesExamples.png');
-    this.load.image('Trees', 'assets/fase2/jogo-boi/FreePlatformerNA/Foreground/Trees.png');
     this.load.image('props2', 'assets/fase2/jogo-boi/Diluvio-Espacial-main/Assets/Caverna/props2.png');
     this.load.spritesheet("vd", "assets/personagens/az.png", {
       frameWidth: 64,
@@ -36,7 +35,6 @@ class scene2 extends Phaser.Scene {
     const CloudsFront = map.addTilesetImage('CloudsFront', 'CloudsFront');
     const Tileset = map.addTilesetImage('Tileset', 'Tileset');
     const TilesExamples = map.addTilesetImage('TilesExamples', 'TilesExamples');
-    const Trees = map.addTilesetImage('Trees', 'Trees');
     const props2 = map.addTilesetImage('props2', 'props2');
     const tilesets = [background3, background4a, background1, mainlev_build, props1, CloudsBack, BGFront, CloudsFront, Tileset, TilesExamples, props2].filter(Boolean);
 
@@ -85,12 +83,14 @@ class scene2 extends Phaser.Scene {
       .setScrollFactor(0)
       .setDepth(999);
 
-    this.anims.create({
-      key: "walk",
-      frames: this.anims.generateFrameNumbers("vd", { start: 0, end: 3 }),
-      frameRate: 10,
-      repeat: -1,
-    });
+    if (!this.anims.exists("walk")) {
+      this.anims.create({
+        key: "walk",
+        frames: this.anims.generateFrameNumbers("vd", { start: 0, end: 3 }),
+        frameRate: 10,
+        repeat: -1,
+      });
+    }
   }
 
   update() {
