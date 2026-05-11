@@ -5,6 +5,7 @@ class scene0 extends Phaser.Scene {
     this.threshold = 0.1;
     this.speed = 100;
     this.direction = undefined;
+    this.remotePlayers = [];
   }
 
   preload() {
@@ -27,7 +28,7 @@ class scene0 extends Phaser.Scene {
 
     this.load.image("vida", "assets/fase4/vida.png");
 
-    this.load.spritesheet("explosion", "assets/fase4/explosion.png", {
+    this.load.spritesheet("explosion", "client/assets/fase4/explosion.png", {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -244,6 +245,33 @@ class scene0 extends Phaser.Scene {
     // Limpar o interval quando a cena for destruída
     this.events.on('shutdown', () => clearInterval(timeCountdown));
 
+    this.game.socket.on("scene0", (state) => {
+      if (state.nv) {
+        try {
+          if (state.nv.id === this.game.socket.id) return;
+
+          let remotePlayer = this.remotePlayers.find(
+            (p) => p.id === state.nv.id,
+          )
+
+          if (!remotePlayer) {
+            remotePlayer = this.add
+              .sprite(state.nv.x, state.nv.y, "character", 0)
+            this.remotePlayers.push({
+              id: state.nv.id,
+              sprite: remotePlayer,
+            });
+          }
+
+          remotePlayer.sprite.setPosition(state.nv.x, state.nv.y);
+          remotePlayer.sprite.setTexture(state.nv.texture, state.nv.frame);
+        } catch (e) {
+          console.log(this.remotePlayers);
+          console.error("Error updating remote player:", e);
+        }
+      }
+    });
+
   }
 
   update() {
@@ -266,6 +294,23 @@ class scene0 extends Phaser.Scene {
           this.newAsteroid = true;
         },
       });
+    }
+
+    try {
+      this.game.socket.emit("scene0", this.game.room, {
+        nv: {
+          id: this.game.socket.id,
+          x: this.nv.x,
+          y: this.nv.y,
+          texture: "nv",
+          animation: this.nv.anims.currentAnim
+            ? this.nv.anims.currentAnim.key
+            : "flying",
+          frame: this.nv.anims.currentFrame.index,
+        },
+      });
+    } catch (e) {
+      console.error("Error updating player:", e);
     }
 
     const laserOnScene = this.laserBeams.getChildren();
