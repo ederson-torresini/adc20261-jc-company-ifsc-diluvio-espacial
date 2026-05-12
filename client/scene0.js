@@ -28,7 +28,7 @@ class scene0 extends Phaser.Scene {
 
     this.load.image("vida", "assets/fase4/vida.png");
 
-    this.load.spritesheet("explosion", "client/assets/fase4/explosion.png", {
+    this.load.spritesheet("explosion", "assets/fase4/explosion.png", {
       frameWidth: 32,
       frameHeight: 32,
     });
