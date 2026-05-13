@@ -105,14 +105,15 @@ class scene2 extends Phaser.Scene {
       .setScrollFactor(0)
       .setDepth(999);
 
-    this.backButton = this.add.text(280, 20, "Voltar", {
+    // Botão Menu
+    this.add.text(280, 40, "Menu", {
       fontSize: "12px",
       fill: "#ffffff",
       backgroundColor: "#000000",
       padding: { x: 5, y: 5 },
     })
       .setInteractive()
-      .on("pointerdown", () => this.scene.start("scene1"))
+      .on("pointerdown", () => this.scene.start("menu"))
       .setScrollFactor(0)
       .setDepth(999);
 

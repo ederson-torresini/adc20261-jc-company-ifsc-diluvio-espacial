@@ -1,6 +1,6 @@
-class scene1 extends Phaser.Scene {
+class scene3 extends Phaser.Scene {
   constructor() {
-    super("scene1");
+    super("scene3");
   }
 
   preload() {
@@ -62,24 +62,33 @@ class scene1 extends Phaser.Scene {
       plataformas3,
     ].filter(Boolean);
 
-    const fundo0 = map.createLayer('fase1/fundo0', tilesets);
-    const fundo1 = map.createLayer('fase1/fundo1', tilesets);
-    const teto = map.createLayer('fase1/teto', tilesets);
-    const casafinal = map.createLayer('fase1/casafinal', tilesets);
-    const plataforma1 = map.createLayer('fase1/plataforma1', tilesets);
+    const layerIndexByName = (name, occurrence = 0) => {
+      const indices = map.layers.reduce((arr, layer, index) => {
+        if (layer.name === name) {
+          arr.push(index);
+        }
+        return arr;
+      }, []);
+      return indices[occurrence] ?? -1;
+    };
 
+    const fundo0 = map.createLayer('fase2/fundo0', tilesets);
+    const fundo1 = map.createLayer('fase2/fundo1', tilesets);
+    const fundo2 = map.createLayer('fase2/fundo2', tilesets);
+    const terra = map.createLayer('fase2/terra', tilesets);
+    const porta = map.createLayer('fase2/portacaverna', tilesets);
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-    this.player = this.physics.add.sprite(160, 300, "az", 0);
+    this.player = this.physics.add.sprite(160, 1240, "az", 0);
     this.player.setCollideWorldBounds(true);
-    this.player.body.setSize(20, 46).setOffset(22, 16);
+    this.player.body.setSize(20, 50).setOffset(22, 18);
     this.player.setGravityY(850);
     this.player.setBounce(0);
 
-    plataforma1.setCollisionByProperty({ collides: true });
-    this.physics.add.collider(this.player, [teto, plataforma1]);
+    terra.setCollisionByProperty({ collides: true });
+    this.physics.add.collider(this.player, terra);
 
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
@@ -138,9 +147,9 @@ class scene1 extends Phaser.Scene {
       (this.cursors.up.isDown || this.keyW.isDown || this.keySpace.isDown) &&
       onGround
     ) {
-      this.player.setVelocityY(-260);
+      this.player.setVelocityY(-330);
     }
   }
 }
 
-export default scene1;
+export default scene3;

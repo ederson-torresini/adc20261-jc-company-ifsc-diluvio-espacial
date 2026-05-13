@@ -92,6 +92,18 @@ class scene0 extends Phaser.Scene {
     this.asteroids = this.physics.add.group();
     this.newAsteroid = true;
 
+    // Botão Menu
+    this.add.text(280, 20, "Menu", {
+      fontSize: "12px",
+      fill: "#ffffff",
+      backgroundColor: "#000000",
+      padding: { x: 5, y: 5 },
+    })
+      .setInteractive()
+      .on("pointerdown", () => this.scene.start("menu"))
+      .setScrollFactor(0)
+      .setDepth(999);
+
     this.explosionAnim = this.anims.create({
       key: "explosion",
       frames: this.anims.generateFrameNumbers("explosion", {
@@ -160,18 +172,7 @@ class scene0 extends Phaser.Scene {
       })
       .setDepth(999);
 
-    this.nextButton = this.add
-      .text(280, 20, "Próxima", {
-        fontSize: "12px",
-        fill: "#ffffff",
-        backgroundColor: "#000000",
-        padding: { x: 5, y: 5 },
-      })
-      .setInteractive()
-      .on("pointerdown", () => {
-        this.scene.start("scene1");
-      })
-      .setDepth(999);
+
 
     this.physics.add.overlap(
       this.laserBeams,
@@ -202,7 +203,7 @@ class scene0 extends Phaser.Scene {
 
       this.nv.disableBody(true, true);
       this.canShoot = false;
-      
+
       this.explosion.play();
 
       const explosionSprite = this.add.sprite(nv.x, nv.y, "explosion");
