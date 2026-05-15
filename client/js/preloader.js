@@ -21,52 +21,52 @@ class preloader extends Phaser.Scene {
 
     this.load.font("pixelify-sans", "pixelify-sans.ttf");
 
-    this.load.image("background3", "background3.png");
-    this.load.image("background1", "background1.png");
-    this.load.image("mainlev_build", "mainlev_build.png");
-    this.load.image("background2", "background2.png");
-    this.load.image("props2", "props2.png");
-    this.load.image("props1", "props1.png");
+    this.load.image("background3", "diluvioespacial/fase1/background3.png");
+    this.load.image("background1", "diluvioespacial/fase1/background1.png");
+    this.load.image("mainlev_build", "diluvioespacial/fase1/mainlev_build.png");
+    this.load.image("background2", "diluvioespacial/fase1/background2.png");
+    this.load.image("props2", "diluvioespacial/fase1/props2.png");
+    this.load.image("props1", "diluvioespacial/fase1/props1.png");
 
-    this.load.tilemapTiledJSON("map", "mapabom.json");
+    this.load.tilemapTiledJSON("map", "diluvioespacial/mapabom.json");
 
-    this.load.image("CloudsBack", "CloudsBack.png");
-    this.load.image("BGFront", "BGFront.png");
-    this.load.image("CloudsFront", "CloudsFront.png");
-    this.load.image("Tileset", "Tileset.png");
-    this.load.image("TilesExamples", "TilesExamples.png");
-    this.load.image("Trees", "Trees.png");
+    this.load.image("CloudsBack", "diluvioespacial/fase2/CloudsBack.png");
+    this.load.image("BGFront", "diluvioespacial/fase2/BGFront.png");
+    this.load.image("CloudsFront", "diluvioespacial/fase2/CloudsFront.png");
+    this.load.image("Tileset", "diluvioespacial/fase2/Tileset.png");
+    this.load.image("TilesExamples", "diluvioespacial/fase2/TilesExamples.png");
+    this.load.image("Trees", "diluvioespacial/fase2/Trees.png");
 
-    this.load.image("fundo3_0", "fundo3_0.png");
-    this.load.image("fundo3_1", "fundo3_1.png");
-    this.load.image("fundo3_2", "fundo3_2.png");
-    this.load.image("plataformas3", "plataformas3.png");
+    this.load.image("fundo3_0", "diluvioespacial/fase3/fundo3_0.png");
+    this.load.image("fundo3_1", "diluvioespacial/fase3/fundo3_1.png");
+    this.load.image("fundo3_2", "diluvioespacial/fase3/fundo3_2.png");
+    this.load.image("plataformas3", "diluvioespacial/fase3/plataformas3.png");
 
-    this.load.image("background", "fundo4.png");
+    this.load.image("background", "fase4/fundo4.png");
 
-    this.load.image("vida", "vida.png");
+    this.load.image("vida", "fase4/vida.png");
 
-    this.load.spritesheet("az", "az.png", {
+    this.load.spritesheet("az", "personagens/az.png", {
       frameWidth: 64,
       frameHeight: 64,
     });
-    this.load.spritesheet("vd", "vd.png", {
+    this.load.spritesheet("vd", "personagens/vd.png", {
       frameWidth: 64,
       frameHeight: 64,
     });
-    this.load.spritesheet("nv", "nv.png", {
+    this.load.spritesheet("nv", "personagens/nv.png", {
       frameWidth: 32,
       frameHeight: 32,
     });
-    this.load.spritesheet("laser-beam", "laser-beam.png", {
+    this.load.spritesheet("laser-beam", "fase4/laser-beam.png", {
       frameWidth: 16,
       frameHeight: 16,
     });
-    this.load.spritesheet("asteroids", "asteroids.png", {
+    this.load.spritesheet("asteroids", "fase4/asteroids.png", {
       frameWidth: 48,
       frameHeight: 48,
     });
-    this.load.spritesheet("explosion", "explosion.png", {
+    this.load.spritesheet("explosion", "fase4/explosion.png", {
       frameWidth: 32,
       frameHeight: 32,
     });
