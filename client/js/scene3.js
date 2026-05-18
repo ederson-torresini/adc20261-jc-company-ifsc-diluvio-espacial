@@ -9,12 +9,12 @@ class scene3 extends Phaser.Scene {
     const fundo3_0 = map.addTilesetImage('fundo3_0', 'fundo3_0');
     const fundo3_1 = map.addTilesetImage('fundo3_1', 'fundo3_1');
     const fundo3_2 = map.addTilesetImage('fundo3_2', 'fundo3 _2');
-    const plataformas3 = map.addTilesetImage('plataformas3', 'plataformas3');
+    const plataformas_3 = map.addTilesetImage('plataformas3', 'plataformas3');
     const tilesets = [
       fundo3_0,
       fundo3_1,
       fundo3_2,
-      plataformas3,
+      plataformas_3,
     ].filter(Boolean);
 
     const layerIndexByName = (name, occurrence = 0) => {
