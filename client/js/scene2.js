@@ -31,11 +31,11 @@ class scene2 extends Phaser.Scene {
       return indices[occurrence] ?? -1;
     };
 
-    const fundo0 = map.createLayer('fase2/fundo0', tilesets);
-    const fundo1 = map.createLayer('fase2/fundo1', tilesets);
-    const fundo2 = map.createLayer('fase2/fundo2', tilesets);
-    const terra = map.createLayer('fase2/terra', tilesets);
-    const porta = map.createLayer('fase2/portacaverna', tilesets);
+    const fundo20 = map.createLayer('fundo20', tilesets);
+    const fundo21 = map.createLayer('fundo21', tilesets);
+    const fundo22 = map.createLayer('fundo22', tilesets);
+    const terra = map.createLayer('terra', tilesets);
+    const porta = map.createLayer('portacaverna', tilesets);
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);

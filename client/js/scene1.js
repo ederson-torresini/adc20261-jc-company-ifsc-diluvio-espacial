@@ -21,11 +21,11 @@ class scene1 extends Phaser.Scene {
       props2,
     ].filter(Boolean);
 
-    const fundo0 = map.createLayer('fase1/fundo0', tilesets);
-    const fundo1 = map.createLayer('fase1/fundo1', tilesets);
-    const teto = map.createLayer('fase1/teto', tilesets);
-    const casafinal = map.createLayer('fase1/casafinal', tilesets);
-    const plataforma1 = map.createLayer('fase1/plataforma1', tilesets);
+    const fundo10 = map.createLayer('fundo10', tilesets);
+    const fundo11 = map.createLayer('fundo11', tilesets);
+    const teto = map.createLayer('teto', tilesets);
+    const casafinal = map.createLayer('casafinal', tilesets);
+    const plataforma1 = map.createLayer('plataforma1', tilesets);
 
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);

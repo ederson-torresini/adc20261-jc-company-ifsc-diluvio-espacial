@@ -21,26 +21,26 @@ class preloader extends Phaser.Scene {
 
     this.load.font("pixelify-sans", "pixelify-sans.ttf");
 
-    this.load.image("background3", "diluvioespacial/fase1/background3.png");
-    this.load.image("background1", "diluvioespacial/fase1/background1.png");
-    this.load.image("mainlev_build", "diluvioespacial/fase1/mainlev_build.png");
-    this.load.image("background2", "diluvioespacial/fase1/background2.png");
-    this.load.image("props2", "diluvioespacial/fase1/props2.png");
-    this.load.image("props1", "diluvioespacial/fase1/props1.png");
+    this.load.image("background3", "diluvioespacial/fase1/assets/background3.png");
+    this.load.image("background1", "diluvioespacial/fase1/assets/background1.png");
+    this.load.image("mainlev_build", "diluvioespacial/fase1/assets/mainlev_build.png");
+    this.load.image("background2", "diluvioespacial/fase1/assets/background2.png");
+    this.load.image("props2", "diluvioespacial/fase1/assets/props2.png");
+    this.load.image("props1", "diluvioespacial/fase1/assets/props1.png");
 
     this.load.tilemapTiledJSON("map", "diluvioespacial/mapabom.json");
 
-    this.load.image("CloudsBack", "diluvioespacial/fase2/CloudsBack.png");
-    this.load.image("BGFront", "diluvioespacial/fase2/BGFront.png");
-    this.load.image("CloudsFront", "diluvioespacial/fase2/CloudsFront.png");
-    this.load.image("Tileset", "diluvioespacial/fase2/Tileset.png");
-    this.load.image("TilesExamples", "diluvioespacial/fase2/TilesExamples.png");
-    this.load.image("Trees", "diluvioespacial/fase2/Trees.png");
+    this.load.image("CloudsBack", "diluvioespacial/fase2/assets/CloudsBack.png");
+    this.load.image("BGFront", "diluvioespacial/fase2/assets/BGFront.png");
+    this.load.image("CloudsFront", "diluvioespacial/fase2/assets/CloudsFront.png");
+    this.load.image("Tileset", "diluvioespacial/fase2/assets/Tileset.png");
+    this.load.image("TilesExamples", "diluvioespacial/fase2/assets/TilesExamples.png");
+    this.load.image("Trees", "diluvioespacial/fase2/assets/Trees.png");
 
-    this.load.image("fundo3_0", "diluvioespacial/fase3/fundo3_0.png");
-    this.load.image("fundo3_1", "diluvioespacial/fase3/fundo3_1.png");
-    this.load.image("fundo3_2", "diluvioespacial/fase3/fundo3_2.png");
-    this.load.image("plataformas3", "diluvioespacial/fase3/plataformas3.png");
+    this.load.image("fundo3_0", "diluvioespacial/fase3/assets/fundo3_0.png");
+    this.load.image("fundo3_1", "diluvioespacial/fase3/assets/fundo3_1.png");
+    this.load.image("fundo3_2", "diluvioespacial/fase3/assets/fundo3_2.png");
+    this.load.image("plataformas3", "diluvioespacial/fase3/assets/plataformas3.png");
 
     this.load.image("background", "fase4/fundo4.png");
 
@@ -77,7 +77,7 @@ class preloader extends Phaser.Scene {
 
     this.load.plugin(
       "rexvirtualjoystickplugin",
-      "./rexvirtualjoystickplugin.min.js",
+      "../js/rexvirtualjoystickplugin.min.js",
       true,
     );
   }

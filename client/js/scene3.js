@@ -8,7 +8,7 @@ class scene3 extends Phaser.Scene {
 
     const fundo3_0 = map.addTilesetImage('fundo3_0', 'fundo3_0');
     const fundo3_1 = map.addTilesetImage('fundo3_1', 'fundo3_1');
-    const fundo3_2 = map.addTilesetImage('fundo3_2', 'fundo3_2');
+    const fundo3_2 = map.addTilesetImage('fundo3_2', 'fundo3 _2');
     const plataformas3 = map.addTilesetImage('plataformas3', 'plataformas3');
     const tilesets = [
       fundo3_0,
@@ -27,10 +27,11 @@ class scene3 extends Phaser.Scene {
       return indices[occurrence] ?? -1;
     };
 
-    const scene3_fundo0 = map.createLayer('fase3/fundo3_0', tilesets);
-    const scene3_fundo1 = map.createLayer('fase3/fundo3_1', tilesets);
-    const scene3_fundo2 = map.createLayer('fase3/fundo3_2', tilesets);
-    const scene3_plataformas3 = map.createLayer('fase3/plataformas3', tilesets);
+    const fundo30 = map.createLayer('fundo30', tilesets);
+    const fundo31 = map.createLayer('fundo31', tilesets);
+    const fundo32 = map.createLayer('fundo32', tilesets);
+    const detalhes = map.createLayer('detalhes', tilesets);
+    const plataformas3 = map.createLayer('plataformas3', tilesets);
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
