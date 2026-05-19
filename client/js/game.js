@@ -22,7 +22,7 @@ class Game extends Phaser.Game {
     this.scene.add("scene1", scene1);
     this.scene.add("scene2", scene2);
     this.scene.add("scene3", scene3);
-    this.scene.start("menu");
+    this.scene.start("start");
 
     if (location.hostname.match(/localhost|127\.0\.0\.1/)) {
       this.socket = io("http://localhost:3000");

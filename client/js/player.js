@@ -61,7 +61,7 @@ class player extends Phaser.Scene {
           this.game.localPlayer,
         );
         this.scene.stop("player");
-        this.scene.start("scene0");
+        this.scene.start("scene1");
       });
     this.character.play("character");
   }
