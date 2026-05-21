@@ -3,44 +3,67 @@ class preloader extends Phaser.Scene {
     super("preloader");
   }
 
-  init(data) {
-    this.nextScene = data?.nextScene;
-  }
-
   preload() {
-    this.cameras.main.setBackgroundColor("#000000");
+    this.add.image(160, 120, "start");
 
-    this.add.rectangle(400, 300, 468, 32).setStrokeStyle(1, 0xffffff);
-    const bar = this.add.rectangle(400 - 230, 300, 4, 28, 0xffffff);
+    const bar = this.add.rectangle(0, 220, 4, 20, 0xffccff).setOrigin(0, 0);
 
     this.load.on("progress", (progress) => {
-      bar.width = 4 + 460 * progress;
+      bar.width = 320 * progress;
+      if (progress < 0.25) bar.fillColor = 0xcccccc;
+      else if (progress < 0.5) bar.fillColor = 0x88cc88;
+      else if (progress < 0.75) bar.fillColor = 0x44cc44;
+      else bar.fillColor = 0x00cc00;
     });
 
     this.load.setPath("assets/");
 
     this.load.font("pixelify-sans", "pixelify-sans.ttf");
 
-    this.load.image("background3", "diluvioespacial/fase1/assets/background3.png");
-    this.load.image("background1", "diluvioespacial/fase1/assets/background1.png");
-    this.load.image("mainlev_build", "diluvioespacial/fase1/assets/mainlev_build.png");
-    this.load.image("background2", "diluvioespacial/fase1/assets/background2.png");
+    this.load.image(
+      "background3",
+      "diluvioespacial/fase1/assets/background3.png",
+    );
+    this.load.image(
+      "background1",
+      "diluvioespacial/fase1/assets/background1.png",
+    );
+    this.load.image(
+      "mainlev_build",
+      "diluvioespacial/fase1/assets/mainlev_build.png",
+    );
+    this.load.image(
+      "background2",
+      "diluvioespacial/fase1/assets/background2.png",
+    );
     this.load.image("props2", "diluvioespacial/fase1/assets/props2.png");
     this.load.image("props1", "diluvioespacial/fase1/assets/props1.png");
 
     this.load.tilemapTiledJSON("map", "diluvioespacial/mapabom.json");
 
-    this.load.image("CloudsBack", "diluvioespacial/fase2/assets/CloudsBack.png");
+    this.load.image(
+      "CloudsBack",
+      "diluvioespacial/fase2/assets/CloudsBack.png",
+    );
     this.load.image("BGFront", "diluvioespacial/fase2/assets/BGFront.png");
-    this.load.image("CloudsFront", "diluvioespacial/fase2/assets/CloudsFront.png");
+    this.load.image(
+      "CloudsFront",
+      "diluvioespacial/fase2/assets/CloudsFront.png",
+    );
     this.load.image("Tileset", "diluvioespacial/fase2/assets/Tileset.png");
-    this.load.image("TilesExamples", "diluvioespacial/fase2/assets/TilesExamples.png");
+    this.load.image(
+      "TilesExamples",
+      "diluvioespacial/fase2/assets/TilesExamples.png",
+    );
     this.load.image("Trees", "diluvioespacial/fase2/assets/Trees.png");
 
     this.load.image("fundo3_0", "diluvioespacial/fase3/assets/fundo3_0.png");
     this.load.image("fundo3_1", "diluvioespacial/fase3/assets/fundo3_1.png");
     this.load.image("fundo3_2", "diluvioespacial/fase3/assets/fundo3_2.png");
-    this.load.image("plataformas3", "diluvioespacial/fase3/assets/plataformas3.png");
+    this.load.image(
+      "plataformas3",
+      "diluvioespacial/fase3/assets/plataformas3.png",
+    );
 
     this.load.image("background", "fase4/fundo4.png");
 
@@ -74,18 +97,11 @@ class preloader extends Phaser.Scene {
     this.load.audio("music4", "fase4/music4.mp3");
     this.load.audio("laser", "fase4/laser.mp3");
     this.load.audio("explosion", "fase4/explosion.mp3");
-
-    this.load.plugin(
-      "rexvirtualjoystickplugin",
-      "../js/rexvirtualjoystickplugin.min.js",
-      true,
-    );
   }
 
   create() {
-    const nextScene = this.nextScene || (this.game.room ? "player" : "room");
     this.scene.stop("preloader");
-    this.scene.start(nextScene);
+    this.scene.start("menu");
   }
 }
 
