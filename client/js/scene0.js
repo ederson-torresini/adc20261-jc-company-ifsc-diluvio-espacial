@@ -240,6 +240,11 @@ class scene0 extends Phaser.Scene {
   }
 
   update() {
+    //if (!this.pads.length < 1) return;
+    // let xAxis = this.pads[0].axes[0].getValue();
+    // let yAxis = this.pads[0].axes[1].getValue();
+  
+
     this.background.tilePositionY -= 1;
 
     if (this.newAsteroid) {
