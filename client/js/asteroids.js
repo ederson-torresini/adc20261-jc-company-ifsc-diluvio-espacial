@@ -192,12 +192,15 @@ class asteroids extends Phaser.Scene {
 
     if (this.newAsteroid) {
       const x = Phaser.Math.Between(0, this.game.config.width);
-      const asteroid = this.asteroids.create(
-        x,
-        -50,
-        "asteroids",
-        Math.floor(Math.random() * 9),
+      const frame = Math.floor(Math.random() * 9);
+      const asteroid = this.asteroids.create(x, -50, "asteroids", frame);
+
+      const factor = Math.floor(frame / 3);
+      asteroid.setSize(
+        asteroid.body.width * Math.pow(0.5, factor),
+        asteroid.body.height * Math.pow(0.5, factor),
       );
+
       asteroid.setVelocity(
         0,
         Phaser.Math.Between(this.asteroidMinSpeed, this.asteroidMaxSpeed),
