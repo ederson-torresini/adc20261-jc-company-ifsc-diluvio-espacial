@@ -12,6 +12,8 @@ class scene2 extends Phaser.Scene {
     const Tileset = map.addTilesetImage('Tileset', 'Tileset');
     const TilesExamples = map.addTilesetImage('TilesExamples', 'TilesExamples');
     const Trees = map.addTilesetImage('Trees', 'Trees');
+    const props2 = map.addTilesetImage('props2', 'props2');
+    const mainlev_build = map.addTilesetImage('mainlev_build', 'mainlev_build');
     const tilesets = [
       CloudsBack,
       BGFront,
@@ -19,6 +21,8 @@ class scene2 extends Phaser.Scene {
       Tileset,
       TilesExamples,
       Trees,
+      props2,
+      mainlev_build,
     ].filter(Boolean);
 
     const layerIndexByName = (name, occurrence = 0) => {
