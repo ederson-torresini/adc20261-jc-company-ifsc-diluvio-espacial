@@ -42,6 +42,7 @@ class preloader extends Phaser.Scene {
     this.load.image("fundo3_1", "fase3/fundo3_1.png");
     this.load.image("fundo3_2", "fase3/fundo3_2.png");
     this.load.image("plataformas3", "fase3/plataformas3.png");
+    this.load.image("colisao3", "fase3/colisao3.png");
 
     this.load.image("background", "asteroids/fundo4.png");
 
