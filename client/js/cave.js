@@ -46,7 +46,7 @@ class cave extends Phaser.Scene {
       this.map.heightInPixels,
     );
 
-    this.spawnPoint = { x: 160, y: 300 };
+    this.spawnPoint = { x: 350, y: 300 };
     this.player = this.physics.add.sprite(
       this.spawnPoint.x,
       this.spawnPoint.y,
