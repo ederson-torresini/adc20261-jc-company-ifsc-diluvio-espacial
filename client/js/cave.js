@@ -83,34 +83,47 @@ class cave extends Phaser.Scene {
         repeat: -1,
       });
     }
+
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
   }
 
   update() {
-    if (this.input.gamepad.total < 1) return;
-
     // Reiniciar o jogo se o jogador cair no chão
     if (this.player.y > this.playerGroundLimit) {
       this.respawnPlayer();
       return;
     }
 
-    // primeiro controle, eixo X
-    let xAxis = this.input.gamepad.gamepads[0].axes[0].getValue();
+    const pad = this.input.gamepad.total > 0 ? this.input.gamepad.gamepads[0] : null;
+    let xAxis = 0;
+    let jumpPressed = false;
+
+    if (pad) {
+      xAxis = pad.axes[0].getValue();
+      jumpPressed = pad.buttons[2].pressed;
+    } else {
+      if (this.cursors.left.isDown) {
+        xAxis = -1;
+      } else if (this.cursors.right.isDown) {
+        xAxis = 1;
+      }
+      jumpPressed =
+        this.cursors.up.isDown || this.keyW.isDown || this.keySpace.isDown;
+    }
+
     this.player.setVelocityX(xAxis * this.playerSpeed);
 
     if (Math.abs(xAxis) > 0.1) {
-      if (xAxis < 0) this.player.setFlipX(true);
-      else this.player.setFlipX(false);
+      this.player.setFlipX(xAxis < 0);
       this.player.play("walk", true);
     } else {
       this.player.play("stopped", true);
     }
 
-    // primeiro controle, botão 2 = B
-    if (this.input.gamepad.gamepads[0].buttons[2].pressed) {
-      if (this.player.body.blocked.down || this.player.body.touching.down) {
-        this.player.setVelocityY(this.playerJump);
-      }
+    if (jumpPressed && (this.player.body.blocked.down || this.player.body.touching.down)) {
+      this.player.setVelocityY(this.playerJump);
     }
   }
 
