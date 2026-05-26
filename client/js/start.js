@@ -16,7 +16,7 @@ class start extends Phaser.Scene {
     if (this.input.gamepad.total < 1) return;
 
     // primeiro controle, botão Start
-    if (this.input.gamepad.gamepads[0].buttons[9].pressed) {
+    if (this.input.gamepad.gamepads[0].buttons[9].pressed || this.input.gamepad.gamepads[1].buttons[9].pressed) {
       this.scene.stop("start");
       this.scene.start("preloader");
     }
