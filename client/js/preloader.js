@@ -79,7 +79,7 @@ class preloader extends Phaser.Scene {
 
   create() {
     this.scene.stop("preloader");
-    this.scene.start("scene3");
+    this.scene.start("cave");
   }
 }
 
