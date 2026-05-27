@@ -45,10 +45,13 @@ class scene2 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.levelHeight = map.heightInPixels;
 
-    this.spawnPoint = { x: 160, y: 1240 };
+    this.playerSpeed = 200;
+    this.playerJump = -520;
+
+    this.spawnPoint = { x: 500, y: 1240 };
     this.player = this.physics.add.sprite(this.spawnPoint.x, this.spawnPoint.y, "az", 0);
     this.player.setCollideWorldBounds(true);
-    this.player.body.setSize(20, 50).setOffset(22, 18);
+    this.player.body.setSize(20, 46).setOffset(22, 16);
     this.player.setGravityY(850);
     this.player.setBounce(0);
 
@@ -75,22 +78,20 @@ class scene2 extends Phaser.Scene {
       .setScrollFactor(0)
       .setDepth(999);
 
-    // Botão Menu
-    this.add.text(280, 40, "Menu", {
-      fontSize: "12px",
-      fill: "#ffffff",
-      backgroundColor: "#000000",
-      padding: { x: 5, y: 5 },
-    })
-      .setInteractive()
-      .on("pointerdown", () => this.scene.start("menu"))
-      .setScrollFactor(0)
-      .setDepth(999);
+
+    if (!this.anims.exists("stopped")) {
+      this.anims.create({
+        key: "stopped",
+        frames: this.anims.generateFrameNumbers("az", { start: 0, end: 5 }),
+        frameRate: 10,
+        repeat: -1,
+      });
+    }
 
     if (!this.anims.exists("walk")) {
       this.anims.create({
         key: "walk",
-        frames: this.anims.generateFrameNumbers("az", { start: 0, end: 3 }),
+        frames: this.anims.generateFrameNumbers("az", { start: 6, end: 11 }),
         frameRate: 10,
         repeat: -1,
       });
@@ -98,51 +99,34 @@ class scene2 extends Phaser.Scene {
   }
 
   update() {
-    this.player.setVelocityX(0);
-
-    const pad = this.pad || this.input.gamepad.gamepads[0] || null;
-    const onGround =
-      this.player.body.blocked.down || this.player.body.touching.down;
-
-    if (
-      this.player.body &&
-      this.player.body.bottom > this.levelHeight + 100
-    ) {
-      this.respawnPlayer();
-      return;
-    }
+    // Movement logic unified with `cave` scene
+    const pad = this.input.gamepad.total > 0 ? this.input.gamepad.gamepads[0] : null;
+    let xAxis = 0;
+    let jumpPressed = false;
 
     if (pad) {
-      const axisX = pad.axes.length ? pad.axes[0].getValue() : 0;
-      if (Math.abs(axisX) > 0.1) {
-        this.player.setVelocityX(200 * axisX);
-        this.player.play("walk", true);
-      } else {
-        this.player.stop();
-      }
-
-      const jumpPressed =
-        pad.A || pad.Y || pad.up || (pad.buttons[0] && pad.buttons[0].pressed);
-      if (jumpPressed && onGround) {
-        this.player.setVelocityY(-520);
-      }
+      xAxis = pad.axes[0].getValue();
+      jumpPressed = pad.buttons[2] && pad.buttons[2].pressed;
     } else {
       if (this.cursors.left.isDown) {
-        this.player.setVelocityX(-200);
-        this.player.play("walk", true);
+        xAxis = -1;
       } else if (this.cursors.right.isDown) {
-        this.player.setVelocityX(200);
-        this.player.play("walk", true);
-      } else {
-        this.player.stop();
+        xAxis = 1;
       }
+      jumpPressed = this.cursors.up.isDown || this.keyW.isDown || this.keySpace.isDown;
+    }
 
-      if (
-        (this.cursors.up.isDown || this.keyW.isDown || this.keySpace.isDown) &&
-        onGround
-      ) {
-        this.player.setVelocityY(-520);
-      }
+    this.player.setVelocityX(xAxis * this.playerSpeed);
+
+    if (Math.abs(xAxis) > 0.1) {
+      this.player.setFlipX(xAxis < 0);
+      this.player.play("walk", true);
+    } else {
+      this.player.play("stopped", true);
+    }
+
+    if (jumpPressed && (this.player.body.blocked.down || this.player.body.touching.down)) {
+      this.player.setVelocityY(this.playerJump);
     }
   }
 
