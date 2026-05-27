@@ -196,7 +196,7 @@ class asteroids extends Phaser.Scene {
       const asteroid = this.asteroids.create(x, -50, "asteroids", frame);
 
       const factor = Math.floor(frame / 3);
-      asteroid.setSize(
+      asteroid.body.setSize(
         asteroid.body.width * Math.pow(0.5, factor),
         asteroid.body.height * Math.pow(0.5, factor),
       );
