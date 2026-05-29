@@ -56,6 +56,18 @@ class preloader extends Phaser.Scene {
       frameWidth: 64,
       frameHeight: 64,
     });
+    this.load.spritesheet("minhocadaterra", "cave/minhocadaterra.png", {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+    this.load.spritesheet("morcego", "cave/morcego.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet("inimigo_fase2", "fase2/inimigo_fase2.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
     this.load.spritesheet("nv", "personagens/nv.png", {
       frameWidth: 32,
       frameHeight: 32,
@@ -80,7 +92,7 @@ class preloader extends Phaser.Scene {
 
   create() {
     this.scene.stop("preloader");
-    this.scene.start("scene2");
+    this.scene.start("cave");
   }
 }
 
