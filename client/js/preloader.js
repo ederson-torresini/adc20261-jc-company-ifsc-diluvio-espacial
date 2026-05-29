@@ -68,6 +68,22 @@ class preloader extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 16,
     });
+    this.load.spritesheet("esquilo", "personagens/esquilo.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet("lontra", "personagens/lontra.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+    this.load.spritesheet("panda_vermelho", "personagens/panda_vermelho.png", {
+      frameWidth: 24,
+      frameHeight: 24,
+    });
+    this.load.spritesheet("cinza", "personagens/cinza.png", {
+      frameWidth: 24,
+      frameHeight: 24,
+    });
     this.load.spritesheet("nv", "personagens/nv.png", {
       frameWidth: 32,
       frameHeight: 32,
@@ -88,6 +104,13 @@ class preloader extends Phaser.Scene {
     this.load.audio("music4", "asteroids/music4.mp3");
     this.load.audio("laser", "asteroids/laser.mp3");
     this.load.audio("explosion", "asteroids/explosion.mp3");
+    this.load.audio("pulo", "personagens/pulo.mp3");
+    this.load.audio("aventura_fase_inteira", "personagens/aventura_fase_inteira.mp3");
+    this.load.audio("game_over", "personagens/game_over.mp3");
+    this.load.audio("som_morcego", "cave/som_morcego.mp3");
+    this.load.audio("coletou_item", "cave/coletou_item.mp3");
+    this.load.audio("mordida", "cave/mordida.mp3");
+    this.load.audio("monstro_saindo_terra", "cave/monstro_saindo_terra.mp3");
   }
 
   create() {
