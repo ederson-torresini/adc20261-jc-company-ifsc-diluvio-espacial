@@ -60,6 +60,8 @@ class cave extends Phaser.Scene {
 
     this.plataforma1.setCollisionByProperty({ collides: true });
     this.physics.add.collider(this.player, [this.teto, this.plataforma1]);
+
+    this.espinhos.setCollisionByProperty({ collides: true });
     this.physics.add.collider(this.player, this.espinhos, () =>
       this.respawnPlayer(),
     );
@@ -86,7 +88,92 @@ class cave extends Phaser.Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-    this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.keySpace = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE,
+    );
+
+    this.anims.create({
+      key: "worm",
+      frames: this.anims.generateFrameNumbers("minhocadaterra", {
+        start: 0,
+        end: 28,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.worms = this.physics.add.group();
+
+    // Minhoca 1
+    this.worms.create(350, 300, "minhocadaterra");
+
+    // Minhoca 2
+    this.worms.create(400, 300, "minhocadaterra");
+
+    // Minhoca 3
+    this.worms.create(450, 300, "minhocadaterra");
+
+    this.worms.children.iterate((worm) => {
+      worm.play("worm", true);
+    });
+
+    this.physics.add.collider(this.worms, this.plataforma1);
+    this.physics.add.overlap(
+      this.player,
+      this.worms,
+      (player, worm) => {
+        if (
+          worm.anims.currentFrame.index >= 4 &&
+          worm.anims.currentFrame.index <= 8
+        ) {
+          this.respawnPlayer();
+        }
+      },
+      null,
+      this,
+    );
+
+    this.anims.create({
+      key: "bat",
+      frames: this.anims.generateFrameNumbers("morcego", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.bats = this.physics.add.group();
+
+    // Morcego 1
+    this.bats.create(500, 300, "morcego");
+
+    // Morcego 2
+    this.bats.create(550, 300, "morcego");
+
+    this.bats.children.iterate((bat) => {
+      bat.body.setAllowGravity(false);
+      bat.play("bat", true);
+      bat.setVelocityY(30);
+
+      this.time.addEvent({
+        delay: 2000,
+        loop: true,
+        callback: () => {
+          bat.setVelocityY(-bat.body.velocity.y);
+        },
+      });
+    });
+
+    this.physics.add.overlap(
+      this.player,
+      this.bats,
+      () => {
+        this.respawnPlayer();
+      },
+      null,
+      this,
+    );
   }
 
   update() {
@@ -96,7 +183,8 @@ class cave extends Phaser.Scene {
       return;
     }
 
-    const pad = this.input.gamepad.total > 0 ? this.input.gamepad.gamepads[0] : null;
+    const pad =
+      this.input.gamepad.total > 0 ? this.input.gamepad.gamepads[0] : null;
     let xAxis = 0;
     let jumpPressed = false;
 
@@ -122,7 +210,10 @@ class cave extends Phaser.Scene {
       this.player.play("stopped", true);
     }
 
-    if (jumpPressed && (this.player.body.blocked.down || this.player.body.touching.down)) {
+    if (
+      jumpPressed &&
+      (this.player.body.blocked.down || this.player.body.touching.down)
+    ) {
       this.player.setVelocityY(this.playerJump);
     }
   }
