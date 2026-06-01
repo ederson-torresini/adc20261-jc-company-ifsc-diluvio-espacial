@@ -174,6 +174,22 @@ class cave extends Phaser.Scene {
       null,
       this,
     );
+
+    // Inicializar vidas
+    if (!this.game.lives) {
+      this.game.lives = 4;
+    }
+
+    // Criar sprites das vidas
+    this.livesSprites = this.add.group();
+    this.livesSprites.clear(true, true);
+    for (let i = 0; i < this.game.lives; i++) {
+      this.livesSprites
+        .create(this.game.config.width - 80 + i * 18, 15, "vida")
+        .setScale(0.5)
+        .setDepth(999)
+        .setScrollFactor(0);
+    }
   }
 
   update() {
@@ -219,9 +235,27 @@ class cave extends Phaser.Scene {
   }
 
   respawnPlayer() {
-    this.player.setPosition(this.spawnPoint.x, this.spawnPoint.y);
-    this.player.setVelocity(0, 0);
-    this.player.play("stopped", true);
+    this.game.lives--;
+
+    if (this.game.lives <= 0) {
+      this.game.lives = 4;
+      this.scene.stop();
+      this.scene.start("start");
+    } else {
+      // Atualizar sprites de vidas
+      this.livesSprites.clear(true, true);
+      for (let i = 0; i < this.game.lives; i++) {
+        this.livesSprites
+          .create(this.game.config.width - 80 + i * 18, 15, "vida")
+          .setScale(0.5)
+          .setDepth(999)
+          .setScrollFactor(0);
+      }
+
+      this.player.setPosition(this.spawnPoint.x, this.spawnPoint.y);
+      this.player.setVelocity(0, 0);
+      this.player.play("stopped", true);
+    }
   }
 }
 

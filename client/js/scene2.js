@@ -58,6 +58,9 @@ class scene2 extends Phaser.Scene {
     terra.setCollisionByProperty({ collides: true });
     this.physics.add.collider(this.player, terra);
 
+    porta.setCollisionByProperty({ collides: true });
+    this.physics.add.collider(this.player, porta);
+
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
     this.pad = this.input.gamepad.gamepads[0] || null;
