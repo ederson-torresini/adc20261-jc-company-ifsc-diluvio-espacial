@@ -128,7 +128,28 @@ class scene3 extends Phaser.Scene {
     this.asteroids = this.physics.add.group();
 
     // Asteroid 1
-    this.asteroids.create(450, 0, "asteroids");
+    this.asteroids.create(1056, 0, "asteroids");
+
+    // Asteroid 2
+    this.asteroids.create(1168, 0, "asteroids");
+
+    // Asteroid 3
+    this.asteroids.create(1264, 0, "asteroids");
+
+    // Asteroid 4
+    this.asteroids.create(1408, 0, "asteroids");
+
+    // Asteroid 5
+    this.asteroids.create(1568, 0, "asteroids");
+
+     // Asteroid 6
+    this.asteroids.create(1680, 0, "asteroids");
+
+     // Asteroid 7
+    this.asteroids.create(1808, 0, "asteroids");
+
+     // Asteroid 8
+    this.asteroids.create(1968, 0, "asteroids");
 
     this.asteroids.children.iterate((asteroid) => {
       asteroid.body.setAllowGravity(false);
