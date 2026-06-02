@@ -1,5 +1,6 @@
 import config from "./config.js";
 import preloader from "./preloader.js";
+import cutscene from "./cutscene.js";
 import asteroids from "./asteroids.js";
 import cave from "./cave.js";
 import scene2 from "./scene2.js";
@@ -11,6 +12,7 @@ class Game extends Phaser.Game {
     super(config);
     this.scene.add("start", start);
     this.scene.add("preloader", preloader);
+    this.scene.add("cutscene", cutscene);
     this.scene.add("asteroids", asteroids);
     this.scene.add("cave", cave);
     this.scene.add("scene2", scene2);
