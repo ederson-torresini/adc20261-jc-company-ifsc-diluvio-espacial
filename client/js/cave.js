@@ -33,6 +33,9 @@ class cave extends Phaser.Scene {
     this.casafinal = this.map.createLayer("casafinal", this.tilesets);
     this.plataforma1 = this.map.createLayer("plataforma1", this.tilesets);
 
+    this.music = this.sound.add("aventura_fase_inteira", { loop: true });
+    this.music.play();
+
     this.physics.world.setBounds(
       0,
       0,
@@ -240,6 +243,7 @@ class cave extends Phaser.Scene {
     if (this.game.lives <= 0) {
       this.game.lives = 4;
       this.scene.stop();
+      this.music.stop();
       this.scene.start("start");
     } else {
       // Atualizar sprites de vidas

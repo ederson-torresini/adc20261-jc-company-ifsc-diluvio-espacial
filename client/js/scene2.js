@@ -41,6 +41,9 @@ class scene2 extends Phaser.Scene {
     const terra = map.createLayer('terra', tilesets);
     const porta = map.createLayer('portacaverna', tilesets);
 
+    this.music = this.sound.add("aventura_fase_inteira", { loop: true });
+    this.music.play();
+
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.levelHeight = map.heightInPixels;
@@ -151,6 +154,7 @@ class scene2 extends Phaser.Scene {
     if (this.game.lives <= 0) {
       this.game.lives = 4;
       this.scene.stop();
+      this.music.stop();
       this.scene.start("start");
     } else {
       // Atualizar sprites de vidas
