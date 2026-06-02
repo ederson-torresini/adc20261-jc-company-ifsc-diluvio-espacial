@@ -115,43 +115,30 @@ class scene3 extends Phaser.Scene {
       });
     }
 
+    // Inicializar vidas
+    if (!this.game.lives) {
+      this.game.lives = 4;
+    }
+
+    // Criar sprites das vidas
+    this.livesSprites = this.add.group();
+    this.livesSprites.clear(true, true);
+    for (let i = 0; i < this.game.lives; i++) {
+      this.livesSprites
+        .create(50 + i * 18, 15, "vida")
+        .setScale(0.5)
+        .setDepth(999)
+        .setScrollFactor(0);
+    }
+
+    // Inicializar meteoros com sistema dinâmico
     this.asteroids = this.physics.add.group();
-
-    // Asteroid 1
-    this.asteroids.create(1056, 0, "asteroids");
-
-    // Asteroid 2
-    this.asteroids.create(1168, 0, "asteroids");
-
-    // Asteroid 3
-    this.asteroids.create(1264, 0, "asteroids");
-
-    // Asteroid 4
-    this.asteroids.create(1408, 0, "asteroids");
-
-    // Asteroid 5
-    this.asteroids.create(1568, 0, "asteroids");
-
-    // Asteroid 6
-    this.asteroids.create(1680, 0, "asteroids");
-
-    // Asteroid 7
-    this.asteroids.create(1808, 0, "asteroids");
-
-    // Asteroid 8
-    this.asteroids.create(1968, 0, "asteroids");
-
-    this.asteroids.children.iterate((asteroid) => {
-      asteroid.body.setAllowGravity(false);
-      asteroid.setVelocityY(500);
-
-      this.time.addEvent({
-        delay: 1000,
-        callback: () => {
-          asteroid.y = 0;
-        },
-      });
-    });
+    this.newAsteroid = true;
+    this.asteroidMinSpeed = 150;
+    this.asteroidMaxSpeed = 300;
+    this.asteroidMinSpawnInterval = 500;
+    this.asteroidMaxSpawnInterval = 1500;
+    this.asteroidHorizontalSpeed = 100;
 
     this.physics.add.overlap(
       this.player,
@@ -165,6 +152,12 @@ class scene3 extends Phaser.Scene {
   }
 
   update() {
+    // Reiniciar o jogo se o jogador cair abaixo de Y = 2160
+    if (this.player.y > 2160) {
+      this.respawnPlayer();
+      return;
+    }
+
     // Movement logic unified with `cave` scene
     const pad =
       this.input.gamepad.total > 0 ? this.input.gamepad.gamepads[0] : null;
@@ -199,11 +192,75 @@ class scene3 extends Phaser.Scene {
     ) {
       this.player.setVelocityY(this.playerJump);
     }
+
+    // Sistema de spawn dinâmico de meteoros
+    if (this.newAsteroid) {
+      const cameraLeft = this.cameras.main.worldView.x;
+      const cameraRight = this.cameras.main.worldView.x + this.cameras.main.worldView.width;
+      const x = Phaser.Math.Between(cameraLeft, cameraRight);
+      const cameraTop = this.cameras.main.worldView.y;
+
+      const asteroid = this.asteroids.create(x, cameraTop - 50, "asteroids");
+      asteroid.body.setAllowGravity(false);
+
+      const velocityY = Phaser.Math.Between(
+        this.asteroidMinSpeed,
+        this.asteroidMaxSpeed,
+      );
+      const velocityX = Phaser.Math.Between(-this.asteroidHorizontalSpeed, this.asteroidHorizontalSpeed);
+
+      asteroid.setVelocity(velocityX, velocityY);
+      this.newAsteroid = false;
+
+      this.time.addEvent({
+        delay: Phaser.Math.Between(
+          this.asteroidMinSpawnInterval,
+          this.asteroidMaxSpawnInterval,
+        ),
+        callback: () => {
+          this.newAsteroid = true;
+        },
+      });
+    }
+
+    // Remover meteoros que saem da tela
+    const asteroidsOnScene = this.asteroids.getChildren();
+    asteroidsOnScene.forEach((asteroid) => {
+      const cameraBottom = this.cameras.main.worldView.y + this.cameras.main.worldView.height;
+      const cameraLeft = this.cameras.main.worldView.x;
+      const cameraRight = this.cameras.main.worldView.x + this.cameras.main.worldView.width;
+
+      if (
+        asteroid.y > cameraBottom + 100 ||
+        asteroid.x < cameraLeft - 50 ||
+        asteroid.x > cameraRight + 50
+      ) {
+        this.asteroids.remove(asteroid, true, true);
+      }
+    });
   }
 
   respawnPlayer() {
-    this.player.setPosition(this.spawnPoint.x, this.spawnPoint.y);
-    this.player.setVelocity(0, 0);
+    this.game.lives--;
+
+    if (this.game.lives <= 0) {
+      this.game.lives = 4;
+      this.scene.stop();
+      this.scene.start("start");
+    } else {
+      // Atualizar sprites de vidas
+      this.livesSprites.clear(true, true);
+      for (let i = 0; i < this.game.lives; i++) {
+        this.livesSprites
+          .create(50 + i * 18, 15, "vida")
+          .setScale(0.5)
+          .setDepth(999)
+          .setScrollFactor(0);
+      }
+
+      this.player.setPosition(this.spawnPoint.x, this.spawnPoint.y);
+      this.player.setVelocity(0, 0);
+    }
   }
 }
 

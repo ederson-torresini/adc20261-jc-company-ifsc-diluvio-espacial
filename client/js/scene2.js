@@ -48,7 +48,7 @@ class scene2 extends Phaser.Scene {
     this.playerSpeed = 200;
     this.playerJump = -520;
 
-    this.spawnPoint = { x: 500, y: 1240 };
+    this.spawnPoint = { x: 500, y: 1200 };
     this.player = this.physics.add.sprite(this.spawnPoint.x, this.spawnPoint.y, "az", 0);
     this.player.setCollideWorldBounds(true);
     this.player.body.setSize(20, 46).setOffset(22, 16);
@@ -108,8 +108,8 @@ class scene2 extends Phaser.Scene {
   }
 
   update() {
-    // Reiniciar o jogo se o jogador cair
-    if (this.player.y > this.levelHeight) {
+    // Reiniciar o jogo se o jogador cair abaixo de Y = 1392
+    if (this.player.y > 1392) {
       this.respawnPlayer();
       return;
     }

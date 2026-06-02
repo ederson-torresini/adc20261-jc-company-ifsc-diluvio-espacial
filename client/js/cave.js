@@ -105,13 +105,13 @@ class cave extends Phaser.Scene {
     this.worms = this.physics.add.group();
 
     // Minhoca 1
-    this.worms.create(350, 300, "minhocadaterra");
+    this.worms.create(1040, 400, "minhocadaterra");
 
     // Minhoca 2
-    this.worms.create(400, 300, "minhocadaterra");
+    this.worms.create(1264, 400, "minhocadaterra");
 
     // Minhoca 3
-    this.worms.create(450, 300, "minhocadaterra");
+    this.worms.create(2112, 400, "minhocadaterra");
 
     this.worms.children.iterate((worm) => {
       worm.play("worm", true);
@@ -146,15 +146,15 @@ class cave extends Phaser.Scene {
     this.bats = this.physics.add.group();
 
     // Morcego 1
-    this.bats.create(500, 300, "morcego");
+    this.bats.create(848, 240, "morcego");
 
     // Morcego 2
-    this.bats.create(550, 300, "morcego");
+    this.bats.create(1840, 272, "morcego");
 
     this.bats.children.iterate((bat) => {
       bat.body.setAllowGravity(false);
       bat.play("bat", true);
-      bat.setVelocityY(30);
+      bat.setVelocityY(60);
 
       this.time.addEvent({
         delay: 2000,
