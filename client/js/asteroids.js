@@ -9,6 +9,11 @@ class asteroids extends Phaser.Scene {
     this.asteroidMaxSpeed = 115;
     this.asteroidMinSpawnInterval = 250;
     this.asteroidMaxSpawnInterval = 500;
+
+    // Inicializar variáveis de interação
+    this.interecting = false;
+    this.doubleInterecting = false;
+    this.shootPressedPrevious = false;
   }
 
   create() {
@@ -64,6 +69,8 @@ class asteroids extends Phaser.Scene {
 
     this.laserBeams = this.physics.add.group();
     this.canShoot = true;
+
+
 
     this.asteroids = this.physics.add.group();
     this.newAsteroid = true;
@@ -161,31 +168,45 @@ class asteroids extends Phaser.Scene {
   update() {
     if (this.input.gamepad.total < 1) return;
 
-    // primeiro controle, eixos X e Y
     let xAxis = this.input.gamepad.gamepads[0].axes[0].getValue();
     let yAxis = this.input.gamepad.gamepads[0].axes[1].getValue();
     this.nv.setVelocity(xAxis * this.nvSpeed, yAxis * this.nvSpeed);
 
-    // primeiro controle, botão 3 = Y
-    if (this.input.gamepad.gamepads[0].buttons[3].pressed) {
-      if (this.canShoot) {
-        this.laser.play();
-        const laser = this.laserBeams.create(
-          this.nv.x,
-          this.nv.y - 20,
-          "laser-beam",
-        );
-        laser.setVelocity(0, -this.laserBeamSpeed);
-        laser.play("laser-spinning");
-        this.canShoot = false;
+    const pad =
+      this.input.gamepad && this.input.gamepad.total > 0
+        ? this.input.gamepad.getPad(0)
+        : null;
 
-        this.time.addEvent({
-          delay: this.shootTimeout,
-          callback: () => {
-            this.canShoot = true;
-          },
-        });
-      }
+    let shootPressed = false;
+
+    // primeiro controle, eixos X e Y
+
+    if (pad) {
+      shootPressed = pad.Y;
+    }
+
+    // Detectar transição de solto para pressionado
+    const shootJustPressed = shootPressed && !this.shootPressedPrevious;
+    this.shootPressedPrevious = shootPressed;
+
+    // Atirar apenas quando o botão é pressionado (transição)
+    if (shootJustPressed && this.canShoot) {
+      this.laser.play();
+      const laser = this.laserBeams.create(
+        this.nv.x,
+        this.nv.y - 20,
+        "laser-beam",
+      );
+      laser.setVelocity(0, -this.laserBeamSpeed);
+      laser.play("laser-spinning");
+      this.canShoot = false;
+
+      this.time.addEvent({
+        delay: this.shootTimeout,
+        callback: () => {
+          this.canShoot = true;
+        },
+      });
     }
 
     this.background.tilePositionY -= 1;
