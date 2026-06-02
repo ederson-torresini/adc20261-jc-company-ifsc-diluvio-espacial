@@ -28,6 +28,10 @@ class preloader extends Phaser.Scene {
     this.load.image("background2", "cave/background2.png");
     this.load.image("props2", "cave/props2.png");
     this.load.image("props1", "cave/props1.png");
+    this.load.image("artefato_1", "cave/artefato_1.png");
+    this.load.image("artefato_2", "cave/artefato_2.png");
+    this.load.image("artefato_3", "cave/artefato_3.png");
+    this.load.image("artefato_4", "cave/artefato_4.png");
 
     this.load.tilemapTiledJSON("map", "mapabom.json");
 
@@ -115,7 +119,7 @@ class preloader extends Phaser.Scene {
 
   create() {
     this.scene.stop("preloader");
-    this.scene.start("scene3");
+    this.scene.start("cave");
   }
 }
 

@@ -178,6 +178,22 @@ class cave extends Phaser.Scene {
       this,
     );
 
+    // Criar artefato_1 perto do spawn do jogador
+    this.artifacts = this.physics.add.group();
+    const artifact1 = this.artifacts.create(464, 416, "artefato_1");
+    artifact1.body.setAllowGravity(false);
+    artifact1.setScale(0.8);
+
+    this.physics.add.overlap(
+      this.player,
+      this.artifacts,
+      (player, artifact) => {
+        this.collectArtifact(artifact);
+      },
+      null,
+      this,
+    );
+
     // Inicializar vidas
     if (!this.game.lives) {
       this.game.lives = 4;
@@ -260,6 +276,12 @@ class cave extends Phaser.Scene {
       this.player.setVelocity(0, 0);
       this.player.play("stopped", true);
     }
+  }
+
+  collectArtifact(artifact) {
+    // Remover o artefato
+    this.artifacts.remove(artifact, true, true);
+    console.log("Artefato_1 coletado!");
   }
 }
 
