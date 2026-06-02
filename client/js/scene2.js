@@ -72,16 +72,6 @@ class scene2 extends Phaser.Scene {
     this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-    this.add.text(10, 20, "Controle: direcional / A", {
-      fontSize: "12px",
-      fill: "#ffffff",
-      backgroundColor: "#000000",
-      padding: { x: 4, y: 4 },
-    })
-      .setScrollFactor(0)
-      .setDepth(999);
-
-
     if (!this.anims.exists("stopped")) {
       this.anims.create({
         key: "stopped",
@@ -99,9 +89,31 @@ class scene2 extends Phaser.Scene {
         repeat: -1,
       });
     }
+
+    // Inicializar vidas
+    if (!this.game.lives) {
+      this.game.lives = 4;
+    }
+
+    // Criar sprites das vidas
+    this.livesSprites = this.add.group();
+    this.livesSprites.clear(true, true);
+    for (let i = 0; i < this.game.lives; i++) {
+      this.livesSprites
+        .create(50 + i * 18, 15, "vida")
+        .setScale(0.5)
+        .setDepth(999)
+        .setScrollFactor(0);
+    }
   }
 
   update() {
+    // Reiniciar o jogo se o jogador cair
+    if (this.player.y > this.levelHeight) {
+      this.respawnPlayer();
+      return;
+    }
+
     // Movement logic unified with `cave` scene
     const pad = this.input.gamepad.total > 0 ? this.input.gamepad.gamepads[0] : null;
     let xAxis = 0;
@@ -134,8 +146,26 @@ class scene2 extends Phaser.Scene {
   }
 
   respawnPlayer() {
-    this.player.setPosition(this.spawnPoint.x, this.spawnPoint.y);
-    this.player.setVelocity(0, 0);
+    this.game.lives--;
+
+    if (this.game.lives <= 0) {
+      this.game.lives = 4;
+      this.scene.stop();
+      this.scene.start("start");
+    } else {
+      // Atualizar sprites de vidas
+      this.livesSprites.clear(true, true);
+      for (let i = 0; i < this.game.lives; i++) {
+        this.livesSprites
+          .create(50 + i * 18, 15, "vida")
+          .setScale(0.5)
+          .setDepth(999)
+          .setScrollFactor(0);
+      }
+
+      this.player.setPosition(this.spawnPoint.x, this.spawnPoint.y);
+      this.player.setVelocity(0, 0);
+    }
   }
 }
 

@@ -185,7 +185,7 @@ class cave extends Phaser.Scene {
     this.livesSprites.clear(true, true);
     for (let i = 0; i < this.game.lives; i++) {
       this.livesSprites
-        .create(this.game.config.width - 80 + i * 18, 15, "vida")
+        .create(50 + i * 18, 15, "vida")
         .setScale(0.5)
         .setDepth(999)
         .setScrollFactor(0);
@@ -246,7 +246,7 @@ class cave extends Phaser.Scene {
       this.livesSprites.clear(true, true);
       for (let i = 0; i < this.game.lives; i++) {
         this.livesSprites
-          .create(this.game.config.width - 80 + i * 18, 15, "vida")
+          .create(50 + i * 18, 15, "vida")
           .setScale(0.5)
           .setDepth(999)
           .setScrollFactor(0);

@@ -97,16 +97,6 @@ class scene3 extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE,
     );
 
-    this.add
-      .text(10, 20, "Controle: direcional / A", {
-        fontSize: "12px",
-        fill: "#ffffff",
-        backgroundColor: "#000000",
-        padding: { x: 4, y: 4 },
-      })
-      .setScrollFactor(0)
-      .setDepth(999);
-
     if (!this.anims.exists("stopped")) {
       this.anims.create({
         key: "stopped",
@@ -142,13 +132,13 @@ class scene3 extends Phaser.Scene {
     // Asteroid 5
     this.asteroids.create(1568, 0, "asteroids");
 
-     // Asteroid 6
+    // Asteroid 6
     this.asteroids.create(1680, 0, "asteroids");
 
-     // Asteroid 7
+    // Asteroid 7
     this.asteroids.create(1808, 0, "asteroids");
 
-     // Asteroid 8
+    // Asteroid 8
     this.asteroids.create(1968, 0, "asteroids");
 
     this.asteroids.children.iterate((asteroid) => {
