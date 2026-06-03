@@ -12,20 +12,26 @@ class start extends Phaser.Scene {
     this.add.image(160, 120, "start");
 
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-    this.keyEnter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+    this.keySpace = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE,
+    );
+    this.keyEnter = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ENTER,
+    );
 
     this.input.on("pointerdown", () => this.startGame());
   }
 
   update() {
-    const pad = this.input.gamepad.total > 0 ? this.input.gamepad.gamepads[0] : null;
-
-    if (pad) {
-      if (pad.buttons[9].pressed) {
-        this.startGame();
+    this.input.gamepad.gamepads.forEach((gamepad) => {
+      if (gamepad) {
+        if (gamepad.buttons[9].pressed) {
+          this.startGame();
+        }
       }
-    } else if (
+    });
+
+    if (
       this.cursors.space.isDown ||
       this.keySpace.isDown ||
       this.keyEnter.isDown ||

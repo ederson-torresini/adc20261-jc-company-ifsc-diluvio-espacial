@@ -22,6 +22,14 @@ class preloader extends Phaser.Scene {
 
     this.load.font("pixelify-sans", "pixelify-sans.ttf");
 
+    this.load.image("cutscene-1", "cutscenes/1.png");
+    this.load.image("cutscene-2", "cutscenes/2.png");
+    this.load.image("cutscene-3", "cutscenes/3.png");
+    this.load.image("cutscene-4", "cutscenes/4.png");
+    this.load.image("cutscene-5", "cutscenes/5.png");
+    this.load.image("cutscene-6", "cutscenes/6.png");
+    this.load.image("cutscene-7", "cutscenes/7.png");
+
     this.load.image("background3", "cave/background3.png");
     this.load.image("background1", "cave/background1.png");
     this.load.image("mainlev_build", "cave/mainlev_build.png");
@@ -119,7 +127,7 @@ class preloader extends Phaser.Scene {
 
   create() {
     this.scene.stop("preloader");
-    this.scene.start("cave");
+    this.scene.start("cutscene", {list: [1, 2, 3]});
   }
 }
 
