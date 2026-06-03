@@ -93,6 +93,84 @@ class scene2 extends Phaser.Scene {
       });
     }
 
+    // Criar animações dos animais
+    if (!this.anims.exists("cinza_anim")) {
+      this.anims.create({
+        key: "cinza_anim",
+        frames: this.anims.generateFrameNumbers("cinza", { start: 0, end: 7 }),
+        frameRate: 10,
+        repeat: -1,
+      });
+    }
+
+    if (!this.anims.exists("esquilo_anim")) {
+      this.anims.create({
+        key: "esquilo_anim",
+        frames: this.anims.generateFrameNumbers("esquilo", { start: 0, end: 7 }),
+        frameRate: 5,
+        repeat: -1,
+      });
+    }
+
+    if (!this.anims.exists("panda_vermelho_anim")) {
+      this.anims.create({
+        key: "panda_vermelho_anim",
+        frames: this.anims.generateFrameNumbers("panda_vermelho", { start: 0, end: 7 }),
+        frameRate: 10,
+        repeat: -1,
+      });
+    }
+
+    if (!this.anims.exists("lontra_anim")) {
+      this.anims.create({
+        key: "lontra_anim",
+        frames: this.anims.generateFrameNumbers("lontra", { start: 0, end: 7 }),
+        frameRate: 10,
+        repeat: -1,
+      });
+    }
+
+    // Criar grupo de animais para coletar
+    this.animals = this.physics.add.group();
+    this.totalAnimals = 8;
+    this.collectedAnimals = 0;
+    this.animalTypes = {};
+
+    // Dados dos animais com suas posições
+    const animalData = [
+      { x: 1056, y: 1264, type: "cinza" },
+      { x: 592, y: 1232, type: "esquilo" },
+      { x: 1280, y: 1264, type: "panda_vermelho" },
+      { x: 816, y: 1264, type: "lontra" },
+      { x: 1904, y: 1168, type: "cinza" },
+      { x: 1728, y: 1280, type: "esquilo" },
+      { x: 2352, y: 1280, type: "panda_vermelho" },
+      { x: 1616, y: 1280, type: "lontra" },
+    ];
+
+    animalData.forEach((data) => {
+      const animal = this.animals.create(data.x, data.y, data.type);
+      animal.body.setAllowGravity(true);
+      animal.setScale(0.8);
+      animal.animalType = data.type;
+
+      // Tocar animação correspondente ao tipo de animal
+      const animKey = `${data.type}_anim`;
+      animal.play(animKey, true);
+    });
+
+    this.physics.add.collider(this.animals, terra);
+
+    this.physics.add.overlap(
+      this.player,
+      this.animals,
+      (player, animal) => {
+        this.collectAnimal(animal);
+      },
+      null,
+      this,
+    );
+
     // Inicializar vidas
     if (!this.game.lives) {
       this.game.lives = 4;
@@ -172,6 +250,34 @@ class scene2 extends Phaser.Scene {
       this.player.setVelocity(0, 0);
     }
   }
+
+  collectAnimal(animal) {
+    // Contar o tipo de animal
+    const type = animal.animalType;
+    if (!this.animalTypes[type]) {
+      this.animalTypes[type] = 0;
+    }
+    this.animalTypes[type]++;
+
+    this.collectedAnimals++;
+    this.animals.remove(animal, true, true);
+
+    console.log(`${type} coletado! Total: ${this.collectedAnimals}/${this.totalAnimals}`);
+
+    // Verificar se todos foram coletados
+    if (this.collectedAnimals === this.totalAnimals) {
+      console.log("Todos os animais foram coletados!");
+
+      // Aguardar um pouco e transicionar para scene3
+      this.time.delayedCall(1000, () => {
+        this.music.stop();
+        this.scene.stop();
+        this.scene.start("scene3");
+      });
+    }
+  }
+
+
 }
 
 export default scene2;

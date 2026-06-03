@@ -127,7 +127,7 @@ class preloader extends Phaser.Scene {
 
   create() {
     this.scene.stop("preloader");
-    this.scene.start("cutscene", {list: [1, 2, 3]});
+    this.scene.start("cutscene", { list: [1, 2, 3]});
   }
 }
 

@@ -224,9 +224,6 @@ class cave extends Phaser.Scene {
       this,
     );
 
-    // Criar UI de artefatos no canto superior direito
-    this.createArtifactUI();
-
     // Inicializar vidas
     if (!this.game.lives) {
       this.game.lives = 4;
@@ -325,9 +322,6 @@ class cave extends Phaser.Scene {
 
     console.log(`${type} coletado! Total: ${this.collectedArtifacts}/${this.totalArtifacts}`);
 
-    // Atualizar UI
-    this.updateArtifactUI();
-
     // Verificar se todos foram coletados
     if (this.collectedArtifacts === this.totalArtifacts) {
       console.log("Todos os artefatos foram coletados!");
@@ -341,99 +335,7 @@ class cave extends Phaser.Scene {
     }
   }
 
-  createArtifactUI() {
-    // Container de artefatos no canto superior direito
-    this.artifactUIContainer = this.add.container(800, 16).setScrollFactor(0).setDepth(1000);
 
-    // Background para o painel (maior agora)
-    const bg = this.add.rectangle(0, 0, 200, 185, 0x000000, 0.8).setOrigin(0, 0);
-    this.artifactUIContainer.add(bg);
-
-    // Título
-    const title = this.add.text(10, 8, "ARTEFATOS", {
-      fontSize: "13px",
-      fontFamily: "Arial",
-      fill: "#FFD700",
-      fontStyle: "bold",
-    });
-    this.artifactUIContainer.add(title);
-
-    // Contador total
-    this.artifactCountText = this.add.text(10, 27, `Total: 0/${this.totalArtifacts}`, {
-      fontSize: "11px",
-      fontFamily: "Arial",
-      fill: "#FFFFFF",
-    });
-    this.artifactUIContainer.add(this.artifactCountText);
-
-    // Separador
-    const line1 = this.add.line(0, 42, 10, 42, 190, 42, 0xFFD700);
-    line1.setLineWidth(1);
-    this.artifactUIContainer.add(line1);
-
-    // Dicionário com a contagem total de cada tipo
-    this.artifactTotals = {
-      artefato_1: 3,
-      artefato_2: 2,
-      artefato_3: 1,
-      artefato_4: 1,
-    };
-
-    // Container para cada tipo de artefato com imagem
-    this.artifactCounters = {};
-    let yPosition = 50;
-
-    Object.keys(this.artifactTotals).forEach((type) => {
-      // Imagem do artefato
-      const img = this.add.sprite(20, yPosition, type);
-      img.setScale(0.6);
-      this.artifactUIContainer.add(img);
-
-      // Contador: coletado/total
-      this.artifactCounters[type] = this.add.text(40, yPosition - 5, `0/${this.artifactTotals[type]}`, {
-        fontSize: "12px",
-        fontFamily: "Arial",
-        fill: "#AAAAFF",
-        fontStyle: "bold",
-      });
-      this.artifactUIContainer.add(this.artifactCounters[type]);
-
-      yPosition += 30;
-    });
-  }
-
-  updateArtifactUI() {
-    const remaining = this.totalArtifacts - this.collectedArtifacts;
-
-    // Atualizar contador total
-    this.artifactCountText.setText(`Total: ${this.collectedArtifacts}/${this.totalArtifacts}`);
-
-    // Atualizar cor do contador total
-    if (this.collectedArtifacts === this.totalArtifacts) {
-      this.artifactCountText.setFill("#00FF00");
-    } else if (this.collectedArtifacts > 0) {
-      this.artifactCountText.setFill("#FFFFFF");
-    }
-
-    // Atualizar contadores de cada tipo de artefato
-    Object.keys(this.artifactTotals).forEach((type) => {
-      const collected = this.artifactTypes[type] || 0;
-      const total = this.artifactTotals[type];
-      const ratio = total > 0 ? collected / total : 0;
-
-      // Atualizar o texto do contador
-      this.artifactCounters[type].setText(`${collected}/${total}`);
-
-      // Mudar cor baseado no progresso
-      if (collected === total) {
-        this.artifactCounters[type].setFill("#00FF00");
-      } else if (collected > 0) {
-        this.artifactCounters[type].setFill("#FFFF00");
-      } else {
-        this.artifactCounters[type].setFill("#AAAAFF");
-      }
-    });
-  }
 }
 
 export default cave;

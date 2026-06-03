@@ -10,8 +10,9 @@ class cutscene extends Phaser.Scene {
   }
 
   create(data) {
+    this.data = data;
     this.index = 0;
-    this.buttonTimeout = 200;
+    this.buttonTimeout = 500;
     this.buttonPressed = false;
 
     data.list.forEach((num) => {
@@ -56,8 +57,8 @@ class cutscene extends Phaser.Scene {
     this.index++;
 
     if (this.index >= this.frames.length) {
-        this.scene.stop("cutscene");
-        this.scene.start("cave");
+      this.scene.stop("cutscene");
+      this.scene.start("cave");
     } else {
       this.cameras.main.fadeIn(this.fadeDuration);
       this.frames[this.index].setVisible(true);
