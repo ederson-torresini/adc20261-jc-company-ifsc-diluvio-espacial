@@ -164,7 +164,7 @@ class cave extends Phaser.Scene {
     this.bats.create(1840, 272, "morcego");
 
     // Morcego 6
-    this.bats.create(2000, 336, "morcego");
+    this.bats.create(2000, 320, "morcego");
 
     this.bats.children.iterate((bat) => {
       bat.body.setAllowGravity(false);
@@ -330,6 +330,13 @@ class cave extends Phaser.Scene {
     // Verificar se todos foram coletados
     if (this.collectedArtifacts === this.totalArtifacts) {
       console.log("Todos os artefatos foram coletados!");
+
+      // Aguardar um pouco e transicionar para scene2
+      this.time.delayedCall(1000, () => {
+        this.music.stop();
+        this.scene.stop();
+        this.scene.start("scene2");
+      });
     }
   }
 
