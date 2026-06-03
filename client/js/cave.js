@@ -149,10 +149,22 @@ class cave extends Phaser.Scene {
     this.bats = this.physics.add.group();
 
     // Morcego 1
-    this.bats.create(848, 240, "morcego");
+    this.bats.create(512, 384, "morcego");
 
     // Morcego 2
+    this.bats.create(848, 240, "morcego");
+
+    // Morcego 3
+    this.bats.create(1152, 384, "morcego");
+
+    // Morcego 4
+    this.bats.create(1536, 448, "morcego");
+
+    // Morcego 5
     this.bats.create(1840, 272, "morcego");
+
+    // Morcego 6
+    this.bats.create(2000, 336, "morcego");
 
     this.bats.children.iterate((bat) => {
       bat.body.setAllowGravity(false);
@@ -178,11 +190,29 @@ class cave extends Phaser.Scene {
       this,
     );
 
-    // Criar artefato_1 perto do spawn do jogador
+    // Criar grupo de artefatos UMA ÚNICA VEZ
     this.artifacts = this.physics.add.group();
-    const artifact1 = this.artifacts.create(464, 416, "artefato_1");
-    artifact1.body.setAllowGravity(false);
-    artifact1.setScale(0.8);
+    this.totalArtifacts = 7;
+    this.collectedArtifacts = 0;
+    this.artifactTypes = {};
+
+    // Adicionar todos os artefatos ao mesmo grupo
+    const artifactData = [
+      { x: 512, y: 368, type: "artefato_1" },
+      { x: 800, y: 288, type: "artefato_2" },
+      { x: 1152, y: 368, type: "artefato_1" },
+      { x: 1536, y: 432, type: "artefato_1" },
+      { x: 1792, y: 320, type: "artefato_2" },
+      { x: 1920, y: 352, type: "artefato_3" },
+      { x: 2544, y: 464, type: "artefato_4" },
+    ];
+
+    artifactData.forEach((data) => {
+      const artifact = this.artifacts.create(data.x, data.y, data.type);
+      artifact.body.setAllowGravity(false);
+      artifact.setScale(0.8);
+      artifact.artifactType = data.type;
+    });
 
     this.physics.add.overlap(
       this.player,
@@ -193,6 +223,9 @@ class cave extends Phaser.Scene {
       null,
       this,
     );
+
+    // Criar UI de artefatos no canto superior direito
+    this.createArtifactUI();
 
     // Inicializar vidas
     if (!this.game.lives) {
@@ -279,9 +312,119 @@ class cave extends Phaser.Scene {
   }
 
   collectArtifact(artifact) {
-    // Remover o artefato
+    // Contar o tipo de artefato
+    const type = artifact.artifactType;
+    if (!this.artifactTypes[type]) {
+      this.artifactTypes[type] = 0;
+    }
+    this.artifactTypes[type]++;
+
+    this.collectedArtifacts++;
     this.artifacts.remove(artifact, true, true);
-    console.log("Artefato_1 coletado!");
+
+    console.log(`${type} coletado! Total: ${this.collectedArtifacts}/${this.totalArtifacts}`);
+
+    // Atualizar UI
+    this.updateArtifactUI();
+
+    // Verificar se todos foram coletados
+    if (this.collectedArtifacts === this.totalArtifacts) {
+      console.log("Todos os artefatos foram coletados!");
+    }
+  }
+
+  createArtifactUI() {
+    // Container de artefatos no canto superior direito
+    this.artifactUIContainer = this.add.container(800, 16).setScrollFactor(0).setDepth(1000);
+
+    // Background para o painel (maior agora)
+    const bg = this.add.rectangle(0, 0, 200, 185, 0x000000, 0.8).setOrigin(0, 0);
+    this.artifactUIContainer.add(bg);
+
+    // Título
+    const title = this.add.text(10, 8, "ARTEFATOS", {
+      fontSize: "13px",
+      fontFamily: "Arial",
+      fill: "#FFD700",
+      fontStyle: "bold",
+    });
+    this.artifactUIContainer.add(title);
+
+    // Contador total
+    this.artifactCountText = this.add.text(10, 27, `Total: 0/${this.totalArtifacts}`, {
+      fontSize: "11px",
+      fontFamily: "Arial",
+      fill: "#FFFFFF",
+    });
+    this.artifactUIContainer.add(this.artifactCountText);
+
+    // Separador
+    const line1 = this.add.line(0, 42, 10, 42, 190, 42, 0xFFD700);
+    line1.setLineWidth(1);
+    this.artifactUIContainer.add(line1);
+
+    // Dicionário com a contagem total de cada tipo
+    this.artifactTotals = {
+      artefato_1: 3,
+      artefato_2: 2,
+      artefato_3: 1,
+      artefato_4: 1,
+    };
+
+    // Container para cada tipo de artefato com imagem
+    this.artifactCounters = {};
+    let yPosition = 50;
+
+    Object.keys(this.artifactTotals).forEach((type) => {
+      // Imagem do artefato
+      const img = this.add.sprite(20, yPosition, type);
+      img.setScale(0.6);
+      this.artifactUIContainer.add(img);
+
+      // Contador: coletado/total
+      this.artifactCounters[type] = this.add.text(40, yPosition - 5, `0/${this.artifactTotals[type]}`, {
+        fontSize: "12px",
+        fontFamily: "Arial",
+        fill: "#AAAAFF",
+        fontStyle: "bold",
+      });
+      this.artifactUIContainer.add(this.artifactCounters[type]);
+
+      yPosition += 30;
+    });
+  }
+
+  updateArtifactUI() {
+    const remaining = this.totalArtifacts - this.collectedArtifacts;
+
+    // Atualizar contador total
+    this.artifactCountText.setText(`Total: ${this.collectedArtifacts}/${this.totalArtifacts}`);
+
+    // Atualizar cor do contador total
+    if (this.collectedArtifacts === this.totalArtifacts) {
+      this.artifactCountText.setFill("#00FF00");
+    } else if (this.collectedArtifacts > 0) {
+      this.artifactCountText.setFill("#FFFFFF");
+    }
+
+    // Atualizar contadores de cada tipo de artefato
+    Object.keys(this.artifactTotals).forEach((type) => {
+      const collected = this.artifactTypes[type] || 0;
+      const total = this.artifactTotals[type];
+      const ratio = total > 0 ? collected / total : 0;
+
+      // Atualizar o texto do contador
+      this.artifactCounters[type].setText(`${collected}/${total}`);
+
+      // Mudar cor baseado no progresso
+      if (collected === total) {
+        this.artifactCounters[type].setFill("#00FF00");
+      } else if (collected > 0) {
+        this.artifactCounters[type].setFill("#FFFF00");
+      } else {
+        this.artifactCounters[type].setFill("#AAAAFF");
+      }
+    });
   }
 }
 
