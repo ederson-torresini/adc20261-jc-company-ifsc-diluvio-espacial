@@ -283,6 +283,7 @@ class cave extends Phaser.Scene {
       (this.player.body.blocked.down || this.player.body.touching.down)
     ) {
       this.player.setVelocityY(this.playerJump);
+      this.sound.play("pulo");
     }
   }
 

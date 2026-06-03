@@ -194,6 +194,7 @@ class scene3 extends Phaser.Scene {
       (this.player.body.blocked.down || this.player.body.touching.down)
     ) {
       this.player.setVelocityY(this.playerJump);
+      this.sound.play("pulo");
     }
 
     // Sistema de spawn dinâmico de meteoros
