@@ -99,6 +99,9 @@ class scene3 extends Phaser.Scene {
     this.keySpace = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE,
     );
+    this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    this.keyEnter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
     if (!this.anims.exists("stopped")) {
       this.anims.create({
@@ -117,6 +120,55 @@ class scene3 extends Phaser.Scene {
         repeat: -1,
       });
     }
+
+    // Criar segundo jogador
+    this.player2 = this.physics.add.sprite(
+      this.spawnPoint.x + 100,
+      this.spawnPoint.y,
+      "vd",
+      0,
+    );
+    this.player2.setCollideWorldBounds(true);
+    this.player2.body.setSize(20, 46).setOffset(22, 16);
+    this.player2.setGravityY(850);
+    this.player2.setBounce(0);
+
+    if (!this.anims.exists("stopped_vd")) {
+      this.anims.create({
+        key: "stopped_vd",
+        frames: this.anims.generateFrameNumbers("vd", { start: 0, end: 5 }),
+        frameRate: 10,
+        repeat: -1,
+      });
+    }
+
+    if (!this.anims.exists("walk_vd")) {
+      this.anims.create({
+        key: "walk_vd",
+        frames: this.anims.generateFrameNumbers("vd", { start: 6, end: 11 }),
+        frameRate: 10,
+        repeat: -1,
+      });
+    }
+
+    plataformas3.setCollisionByProperty({ collides: true });
+    if (
+      !plataformas3.collideIndexes ||
+      plataformas3.collideIndexes.length === 0
+    ) {
+      plataformas3.setCollisionByExclusion([-1]);
+    }
+    this.physics.add.collider(this.player2, plataformas3);
+
+    this.physics.add.overlap(
+      this.player2,
+      this.asteroids,
+      () => {
+        this.respawnPlayer2();
+      },
+      null,
+      this,
+    );
 
     // Inicializar vidas
     if (!this.game.lives) {
@@ -161,6 +213,11 @@ class scene3 extends Phaser.Scene {
       return;
     }
 
+    if (this.player2.y > 2160) {
+      this.respawnPlayer2();
+      return;
+    }
+
     // Movement logic unified with `cave` scene
     const pad =
       this.input.gamepad.total > 0 ? this.input.gamepad.gamepads[0] : null;
@@ -194,6 +251,34 @@ class scene3 extends Phaser.Scene {
       (this.player.body.blocked.down || this.player.body.touching.down)
     ) {
       this.player.setVelocityY(this.playerJump);
+      this.sound.play("pulo");
+    }
+
+    // Controles do player 2 (W, A, D, ENTER)
+    let xAxis2 = 0;
+    let jumpPressed2 = false;
+
+    if (this.keyA.isDown) {
+      xAxis2 = -1;
+    } else if (this.keyD.isDown) {
+      xAxis2 = 1;
+    }
+    jumpPressed2 = this.keyEnter.isDown;
+
+    this.player2.setVelocityX(xAxis2 * this.playerSpeed);
+
+    if (Math.abs(xAxis2) > 0.1) {
+      this.player2.setFlipX(xAxis2 < 0);
+      this.player2.play("walk_vd", true);
+    } else {
+      this.player2.play("stopped_vd", true);
+    }
+
+    if (
+      jumpPressed2 &&
+      (this.player2.body.blocked.down || this.player2.body.touching.down)
+    ) {
+      this.player2.setVelocityY(this.playerJump);
       this.sound.play("pulo");
     }
 
@@ -265,6 +350,30 @@ class scene3 extends Phaser.Scene {
 
       this.player.setPosition(this.spawnPoint.x, this.spawnPoint.y);
       this.player.setVelocity(0, 0);
+    }
+  }
+
+  respawnPlayer2() {
+    this.game.lives--;
+
+    if (this.game.lives <= 0) {
+      this.game.lives = 4;
+      this.scene.stop();
+      this.music.stop();
+      this.scene.start("start");
+    } else {
+      // Atualizar sprites de vidas
+      this.livesSprites.clear(true, true);
+      for (let i = 0; i < this.game.lives; i++) {
+        this.livesSprites
+          .create(50 + i * 18, 15, "vida")
+          .setScale(0.5)
+          .setDepth(999)
+          .setScrollFactor(0);
+      }
+
+      this.player2.setPosition(this.spawnPoint.x + 100, this.spawnPoint.y);
+      this.player2.setVelocity(0, 0);
     }
   }
 }
