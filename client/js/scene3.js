@@ -90,8 +90,13 @@ class scene3 extends Phaser.Scene {
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
     this.pad = this.input.gamepad.gamepads[0] || null;
+    this.pad2 = this.input.gamepad.gamepads[1] || null;
     this.input.gamepad.once("connected", (pad) => {
-      this.pad = pad;
+      if (!this.pad) {
+        this.pad = pad;
+      } else if (!this.pad2) {
+        this.pad2 = pad;
+      }
     });
 
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -123,7 +128,7 @@ class scene3 extends Phaser.Scene {
 
     // Criar segundo jogador
     this.player2 = this.physics.add.sprite(
-      this.spawnPoint.x + 100,
+      this.spawnPoint.x + 50,
       this.spawnPoint.y,
       "vd",
       0,
@@ -160,16 +165,6 @@ class scene3 extends Phaser.Scene {
     }
     this.physics.add.collider(this.player2, plataformas3);
 
-    this.physics.add.overlap(
-      this.player2,
-      this.asteroids,
-      () => {
-        this.respawnPlayer2();
-      },
-      null,
-      this,
-    );
-
     // Inicializar vidas
     if (!this.game.lives) {
       this.game.lives = 4;
@@ -200,6 +195,15 @@ class scene3 extends Phaser.Scene {
       this.asteroids,
       () => {
         this.respawnPlayer();
+      },
+      null,
+      this,
+    );
+    this.physics.add.overlap(
+      this.player2,
+      this.asteroids,
+      () => {
+        this.respawnPlayer2();
       },
       null,
       this,
@@ -254,16 +258,23 @@ class scene3 extends Phaser.Scene {
       this.sound.play("pulo");
     }
 
-    // Controles do player 2 (W, A, D, ENTER)
+    // Controles do player 2 (gamepad ou A/D + W/Space/Enter)
+    const pad2 =
+      this.input.gamepad.total > 1 ? this.input.gamepad.gamepads[1] : null;
     let xAxis2 = 0;
     let jumpPressed2 = false;
 
-    if (this.keyA.isDown) {
-      xAxis2 = -1;
-    } else if (this.keyD.isDown) {
-      xAxis2 = 1;
+    if (pad2) {
+      xAxis2 = pad2.axes[0].getValue();
+      jumpPressed2 = pad2.buttons[2] && pad2.buttons[2].pressed;
+    } else {
+      if (this.keyA.isDown) {
+        xAxis2 = -1;
+      } else if (this.keyD.isDown) {
+        xAxis2 = 1;
+      }
+      jumpPressed2 = this.keyW.isDown || this.keySpace.isDown || this.keyEnter.isDown;
     }
-    jumpPressed2 = this.keyEnter.isDown;
 
     this.player2.setVelocityX(xAxis2 * this.playerSpeed);
 
@@ -329,6 +340,25 @@ class scene3 extends Phaser.Scene {
     });
   }
 
+  resetBothPlayers() {
+    // Atualizar sprites de vidas
+    this.livesSprites.clear(true, true);
+    for (let i = 0; i < this.game.lives; i++) {
+      this.livesSprites
+        .create(50 + i * 18, 15, "vida")
+        .setScale(0.5)
+        .setDepth(999)
+        .setScrollFactor(0);
+    }
+
+    // Resetar ambos os jogadores
+    this.player.setPosition(this.spawnPoint.x, this.spawnPoint.y);
+    this.player.setVelocity(0, 0);
+
+    this.player2.setPosition(this.spawnPoint.x + 50, this.spawnPoint.y);
+    this.player2.setVelocity(0, 0);
+  }
+
   respawnPlayer() {
     this.game.lives--;
 
@@ -338,18 +368,7 @@ class scene3 extends Phaser.Scene {
       this.music.stop();
       this.scene.start("start");
     } else {
-      // Atualizar sprites de vidas
-      this.livesSprites.clear(true, true);
-      for (let i = 0; i < this.game.lives; i++) {
-        this.livesSprites
-          .create(50 + i * 18, 15, "vida")
-          .setScale(0.5)
-          .setDepth(999)
-          .setScrollFactor(0);
-      }
-
-      this.player.setPosition(this.spawnPoint.x, this.spawnPoint.y);
-      this.player.setVelocity(0, 0);
+      this.resetBothPlayers();
     }
   }
 
@@ -362,18 +381,7 @@ class scene3 extends Phaser.Scene {
       this.music.stop();
       this.scene.start("start");
     } else {
-      // Atualizar sprites de vidas
-      this.livesSprites.clear(true, true);
-      for (let i = 0; i < this.game.lives; i++) {
-        this.livesSprites
-          .create(50 + i * 18, 15, "vida")
-          .setScale(0.5)
-          .setDepth(999)
-          .setScrollFactor(0);
-      }
-
-      this.player2.setPosition(this.spawnPoint.x + 100, this.spawnPoint.y);
-      this.player2.setVelocity(0, 0);
+      this.resetBothPlayers();
     }
   }
 }

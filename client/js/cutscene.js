@@ -58,7 +58,7 @@ class cutscene extends Phaser.Scene {
 
     if (this.index >= this.frames.length) {
       this.scene.stop("cutscene");
-      this.scene.start("scene2");
+      this.scene.start("scene3");
     } else {
       this.cameras.main.fadeIn(this.fadeDuration);
       this.frames[this.index].setVisible(true);

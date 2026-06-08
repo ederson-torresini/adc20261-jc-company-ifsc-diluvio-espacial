@@ -166,20 +166,20 @@ class asteroids extends Phaser.Scene {
   }
 
   update() {
-    if (this.input.gamepad.total < 1) return;
+    // Controle da nave: segundo jogador (gamepad[1])
+    if (this.input.gamepad.total > 1) {
+      let xAxis = this.input.gamepad.gamepads[1].axes[0].getValue();
+      let yAxis = this.input.gamepad.gamepads[1].axes[1].getValue();
+      this.nv.setVelocity(xAxis * this.nvSpeed, yAxis * this.nvSpeed);
+    }
 
-    let xAxis = this.input.gamepad.gamepads[0].axes[0].getValue();
-    let yAxis = this.input.gamepad.gamepads[0].axes[1].getValue();
-    this.nv.setVelocity(xAxis * this.nvSpeed, yAxis * this.nvSpeed);
-
+    // Tiro: primeiro jogador (gamepad[0])
     const pad =
       this.input.gamepad && this.input.gamepad.total > 0
         ? this.input.gamepad.getPad(0)
         : null;
 
     let shootPressed = false;
-
-    // primeiro controle, eixos X e Y
 
     if (pad) {
       shootPressed = pad.Y;
