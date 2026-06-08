@@ -190,6 +190,10 @@ class scene3 extends Phaser.Scene {
     this.asteroidMaxSpawnInterval = 1500;
     this.asteroidHorizontalSpeed = 100;
 
+    // Definir zonas de segurança (onde não spawnam meteoros)
+    this.safeZoneTopHeight = 500; // Zona de segurança no começo (primeiros 500px)
+    this.safeZoneBottomHeight = 500; // Zona de segurança no final (últimos 500px)
+
     this.physics.add.overlap(
       this.player,
       this.asteroids,
@@ -297,19 +301,28 @@ class scene3 extends Phaser.Scene {
     if (this.newAsteroid) {
       const cameraLeft = this.cameras.main.worldView.x;
       const cameraRight = this.cameras.main.worldView.x + this.cameras.main.worldView.width;
-      const x = Phaser.Math.Between(cameraLeft, cameraRight);
       const cameraTop = this.cameras.main.worldView.y;
 
-      const asteroid = this.asteroids.create(x, cameraTop - 50, "asteroids");
-      asteroid.body.setAllowGravity(false);
+      // Verificar se está em zona de segurança
+      const isInTopSafeZone = cameraTop < this.safeZoneTopHeight;
+      const isInBottomSafeZone = cameraTop > this.levelHeight - this.safeZoneBottomHeight;
 
-      const velocityY = Phaser.Math.Between(
-        this.asteroidMinSpeed,
-        this.asteroidMaxSpeed,
-      );
-      const velocityX = Phaser.Math.Between(-this.asteroidHorizontalSpeed, this.asteroidHorizontalSpeed);
+      // Só spawnar se NÃO estiver em zona de segurança
+      if (!isInTopSafeZone && !isInBottomSafeZone) {
+        const x = Phaser.Math.Between(cameraLeft, cameraRight);
 
-      asteroid.setVelocity(velocityX, velocityY);
+        const asteroid = this.asteroids.create(x, cameraTop - 50, "asteroids");
+        asteroid.body.setAllowGravity(false);
+
+        const velocityY = Phaser.Math.Between(
+          this.asteroidMinSpeed,
+          this.asteroidMaxSpeed,
+        );
+        const velocityX = 0;
+
+        asteroid.setVelocity(velocityX, velocityY);
+      }
+
       this.newAsteroid = false;
 
       this.time.addEvent({
