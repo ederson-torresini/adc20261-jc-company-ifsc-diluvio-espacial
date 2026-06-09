@@ -26,19 +26,19 @@ class cutscene extends Phaser.Scene {
     this.timer = this.time.addEvent({
       delay: this.buttonTimeout * 10,
       callback: () => {
-        this.nextFrame();
+        this.nextFrame(data.nextScene);
       },
     });
   }
 
-  update() {
+  update(data) {
     console.log(this.index, this.buttonPressed);
 
     this.input.gamepad.gamepads.forEach((gamepad) => {
       if (gamepad) {
         if (gamepad.buttons[9].pressed && !this.buttonPressed) {
           this.buttonPressed = true;
-          this.nextFrame();
+          this.nextFrame(data.nextScene);
 
           this.time.addEvent({
             delay: this.buttonTimeout,
@@ -51,14 +51,14 @@ class cutscene extends Phaser.Scene {
     });
   }
 
-  nextFrame() {
+  nextFrame(nextScene) {
     this.cameras.main.fadeOut(this.fadeDuration);
     this.frames[this.index].setVisible(false);
     this.index++;
 
     if (this.index >= this.frames.length) {
       this.scene.stop("cutscene");
-      this.scene.start("scene3");
+      this.scene.start(nextScene);
     } else {
       this.cameras.main.fadeIn(this.fadeDuration);
       this.frames[this.index].setVisible(true);
@@ -67,7 +67,7 @@ class cutscene extends Phaser.Scene {
       this.timer = this.time.addEvent({
         delay: this.buttonTimeout * 10,
         callback: () => {
-          this.nextFrame();
+          this.nextFrame(nextScene);
         },
       });
     }

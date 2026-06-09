@@ -378,7 +378,7 @@ class scene2 extends Phaser.Scene {
       this.time.delayedCall(1000, () => {
         this.music.stop();
         this.scene.stop();
-        this.scene.start("scene3");
+        this.scene.start("cutscene", { list: [5], nextScene: "scene3" });
       });
     }
   }

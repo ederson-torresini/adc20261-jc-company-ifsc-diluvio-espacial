@@ -104,7 +104,7 @@ class cave extends Phaser.Scene {
     if (!this.anims.exists("stopped_vd")) {
       this.anims.create({
         key: "stopped_vd",
-        frames: this.anims.generateFrameNumbers("vd", { start: 0, end: 5 }),
+        frames: this.anims.generateFrameNumbers("vd", { start: 0, end: 3 }),
         frameRate: 10,
         repeat: -1,
       });
@@ -473,7 +473,7 @@ class cave extends Phaser.Scene {
       this.time.delayedCall(1000, () => {
         this.music.stop();
         this.scene.stop();
-        this.scene.start("scene2");
+        this.scene.start("cutscene", { list: [4], nextScene: "scene2" });
       });
     }
   }

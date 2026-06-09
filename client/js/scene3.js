@@ -392,7 +392,7 @@ class scene3 extends Phaser.Scene {
       this.game.lives = 4;
       this.scene.stop();
       this.music.stop();
-      this.scene.start("start");
+      this.scene.start("cutscene", { list: [6], nextScene: "asteroids" });
     } else {
       this.resetBothPlayers();
     }

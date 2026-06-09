@@ -132,7 +132,7 @@ class asteroids extends Phaser.Scene {
         if (this.game.lives <= 0) {
           this.game.lives = 4;
           this.scene.stop();
-          this.scene.start("start");
+          this.scene.start("gameover");
         } else {
           this.scene.restart();
         }
@@ -157,7 +157,7 @@ class asteroids extends Phaser.Scene {
         clearInterval(timeCountdown);
         this.game.lives = 4; // Resetar vidas
         this.scene.stop();
-        this.scene.start("start");
+        this.scene.start("cutscene", { list: [7], nextScene: "creditos" });
       }
     }, 1000);
 
