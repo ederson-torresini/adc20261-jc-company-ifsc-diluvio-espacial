@@ -10,6 +10,8 @@ import start from "./start.js";
 class Game extends Phaser.Game {
   constructor() {
     super(config);
+    this.initialLives = 8;
+    this.lives = this.initialLives;
     this.scene.add("start", start);
     this.scene.add("preloader", preloader);
     this.scene.add("cutscene", cutscene);

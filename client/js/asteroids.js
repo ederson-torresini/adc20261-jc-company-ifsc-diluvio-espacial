@@ -43,8 +43,8 @@ class asteroids extends Phaser.Scene {
     this.canShoot = true;
 
     // Inicializar vidas
-    if (!this.game.lives) {
-      this.game.lives = 4;
+    if (this.game.lives === undefined) {
+      this.game.lives = this.game.initialLives;
     }
 
     // Criar sprites das vidas
@@ -157,7 +157,7 @@ class asteroids extends Phaser.Scene {
 
       if (counter === 0) {
         clearInterval(timeCountdown);
-        this.game.lives = 4; // Resetar vidas
+        this.game.lives = this.game.initialLives; // Resetar vidas
         this.scene.stop();
         this.scene.start("cutscene", { list: [7], nextScene: "creditos" });
       }

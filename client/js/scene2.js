@@ -51,7 +51,7 @@ class scene2 extends Phaser.Scene {
     this.playerSpeed = 200;
     this.playerJump = -520;
 
-    this.spawnPoint = { x: 500, y: 1200 };
+    this.spawnPoint = { x: 450, y: 1200 };
     this.player = this.physics.add.sprite(this.spawnPoint.x, this.spawnPoint.y, "az", 0);
     this.player.setCollideWorldBounds(true);
     this.player.body.setSize(20, 46).setOffset(22, 16);
@@ -64,7 +64,7 @@ class scene2 extends Phaser.Scene {
     porta.setCollisionByProperty({ collides: true });
     this.physics.add.collider(this.player, porta);
 
-    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
+    // Câmera seguirá o ponto médio entre os dois jogadores (será atualizada no update)
 
     this.pad = this.input.gamepad.gamepads[0] || null;
     this.pad2 = this.input.gamepad.gamepads[1] || null;
@@ -131,6 +131,32 @@ class scene2 extends Phaser.Scene {
 
     porta.setCollisionByProperty({ collides: true });
     this.physics.add.collider(this.player2, porta);
+
+    // Criar barreiras invisíveis dinâmicas que acompanham a câmera
+    const cameraWidth = this.cameras.main.width;
+    const cameraHeight = this.cameras.main.height;
+
+    // Barreiras dinâmicas (serão atualizadas no update)
+    this.leftBoundary = this.physics.add.staticSprite(0, 0, null).setVisible(false);
+    this.rightBoundary = this.physics.add.staticSprite(0, 0, null).setVisible(false);
+    this.topBoundary = this.physics.add.staticSprite(0, 0, null).setVisible(false);
+    this.bottomBoundary = this.physics.add.staticSprite(0, 0, null).setVisible(false);
+
+    // Configurar tamanhos das barreiras
+    this.leftBoundary.body.setSize(50, cameraHeight * 2);
+    this.rightBoundary.body.setSize(50, cameraHeight * 2);
+    this.topBoundary.body.setSize(cameraWidth * 2, 50);
+    this.bottomBoundary.body.setSize(cameraWidth * 2, 50);
+
+    // Adicionar colisores
+    this.physics.add.collider(this.player, this.leftBoundary);
+    this.physics.add.collider(this.player, this.rightBoundary);
+    this.physics.add.collider(this.player, this.topBoundary);
+    this.physics.add.collider(this.player, this.bottomBoundary);
+    this.physics.add.collider(this.player2, this.leftBoundary);
+    this.physics.add.collider(this.player2, this.rightBoundary);
+    this.physics.add.collider(this.player2, this.topBoundary);
+    this.physics.add.collider(this.player2, this.bottomBoundary);
 
     // Criar animações dos animais
     if (!this.anims.exists("cinza_anim")) {
@@ -221,8 +247,8 @@ class scene2 extends Phaser.Scene {
     );
 
     // Inicializar vidas
-    if (!this.game.lives) {
-      this.game.lives = 4;
+    if (this.game.lives === undefined) {
+      this.game.lives = this.game.initialLives;
     }
 
     // Criar sprites das vidas
@@ -238,6 +264,22 @@ class scene2 extends Phaser.Scene {
   }
 
   update() {
+    // Câmera segue o ponto médio entre os dois jogadores
+    const midX = (this.player.x + this.player2.x) / 2;
+    const midY = (this.player.y + this.player2.y) / 2;
+    this.cameras.main.centerOn(midX, midY);
+
+    // Atualizar posições das barreiras para acompanhar a câmera
+    const cameraLeft = this.cameras.main.worldView.x;
+    const cameraRight = this.cameras.main.worldView.x + this.cameras.main.worldView.width;
+    const cameraTop = this.cameras.main.worldView.y;
+    const cameraBottom = this.cameras.main.worldView.y + this.cameras.main.worldView.height;
+
+    this.leftBoundary.setPosition(cameraLeft - 25, this.cameras.main.centerY);
+    this.rightBoundary.setPosition(cameraRight + 25, this.cameras.main.centerY);
+    this.topBoundary.setPosition(this.cameras.main.centerX, cameraTop - 25);
+    this.bottomBoundary.setPosition(this.cameras.main.centerX, cameraBottom + 25);
+
     // Reiniciar o jogo se o jogador cair abaixo de Y = 1392
     if (this.player.y > 1392) {
       this.respawnPlayer();
@@ -335,7 +377,7 @@ class scene2 extends Phaser.Scene {
     this.game.lives--;
 
     if (this.game.lives <= 0) {
-      this.game.lives = 4;
+      this.game.lives = this.game.initialLives;
       this.scene.stop();
       this.music.stop();
       this.scene.start("start");
@@ -348,7 +390,7 @@ class scene2 extends Phaser.Scene {
     this.game.lives--;
 
     if (this.game.lives <= 0) {
-      this.game.lives = 4;
+      this.game.lives = this.game.initialLives;
       this.scene.stop();
       this.music.stop();
       this.scene.start("start");
