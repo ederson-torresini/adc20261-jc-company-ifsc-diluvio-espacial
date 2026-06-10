@@ -42,10 +42,8 @@ class asteroids extends Phaser.Scene {
     this.nv.setCollideWorldBounds(true);
     this.canShoot = true;
 
-    // Inicializar vidas
-    if (this.game.lives === undefined) {
-      this.game.lives = this.game.initialLives;
-    }
+    // Resetar vidas para a fase
+    this.game.lives = this.game.initialLives;
 
     // Criar sprites das vidas
     this.livesSprites = this.add.group();

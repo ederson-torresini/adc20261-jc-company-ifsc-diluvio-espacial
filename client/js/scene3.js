@@ -166,36 +166,10 @@ class scene3 extends Phaser.Scene {
     }
     this.physics.add.collider(this.player2, plataformas3);
 
-    // Criar barreiras invisíveis dinâmicas que acompanham a câmera
-    const cameraWidth = this.cameras.main.width;
-    const cameraHeight = this.cameras.main.height;
+    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
-    // Barreiras dinâmicas (serão atualizadas no update)
-    this.leftBoundary = this.physics.add.staticSprite(0, 0, null).setVisible(false);
-    this.rightBoundary = this.physics.add.staticSprite(0, 0, null).setVisible(false);
-    this.topBoundary = this.physics.add.staticSprite(0, 0, null).setVisible(false);
-    this.bottomBoundary = this.physics.add.staticSprite(0, 0, null).setVisible(false);
-
-    // Configurar tamanhos das barreiras
-    this.leftBoundary.body.setSize(50, cameraHeight * 2);
-    this.rightBoundary.body.setSize(50, cameraHeight * 2);
-    this.topBoundary.body.setSize(cameraWidth * 2, 50);
-    this.bottomBoundary.body.setSize(cameraWidth * 2, 50);
-
-    // Adicionar colisores
-    this.physics.add.collider(this.player, this.leftBoundary);
-    this.physics.add.collider(this.player, this.rightBoundary);
-    this.physics.add.collider(this.player, this.topBoundary);
-    this.physics.add.collider(this.player, this.bottomBoundary);
-    this.physics.add.collider(this.player2, this.leftBoundary);
-    this.physics.add.collider(this.player2, this.rightBoundary);
-    this.physics.add.collider(this.player2, this.topBoundary);
-    this.physics.add.collider(this.player2, this.bottomBoundary);
-
-    // Inicializar vidas
-    if (this.game.lives === undefined) {
-      this.game.lives = this.game.initialLives;
-    }
+    this.pad = this.input.gamepad.gamepads[0] || null;
+    this.game.lives = this.game.initialLives;
 
     // Criar sprites das vidas
     this.livesSprites = this.add.group();
@@ -242,22 +216,6 @@ class scene3 extends Phaser.Scene {
   }
 
   update() {
-    // Câmera segue o ponto médio entre os dois jogadores
-    const midX = (this.player.x + this.player2.x) / 2;
-    const midY = (this.player.y + this.player2.y) / 2;
-    this.cameras.main.centerOn(midX, midY);
-
-    // Atualizar posições das barreiras para acompanhar a câmera
-    const cameraLeft = this.cameras.main.worldView.x;
-    const cameraRight = this.cameras.main.worldView.x + this.cameras.main.worldView.width;
-    const cameraTop = this.cameras.main.worldView.y;
-    const cameraBottom = this.cameras.main.worldView.y + this.cameras.main.worldView.height;
-
-    this.leftBoundary.setPosition(cameraLeft - 25, this.cameras.main.centerY);
-    this.rightBoundary.setPosition(cameraRight + 25, this.cameras.main.centerY);
-    this.topBoundary.setPosition(this.cameras.main.centerX, cameraTop - 25);
-    this.bottomBoundary.setPosition(this.cameras.main.centerX, cameraBottom + 25);
-
     // Verificar se algum jogador venceu a fase (chegou ao topo)
     if (this.player.y < this.winZoneY || this.player2.y < this.winZoneY) {
       this.music.stop();
