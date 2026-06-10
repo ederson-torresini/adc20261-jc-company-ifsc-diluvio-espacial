@@ -14,46 +14,42 @@ Dois seres de outro planeta receberam uma missão divina de construir uma espaç
 - Os dois seres de outro planeta precisam coletar itens para construir uma nave espacial, buscar os demais seres vivos do planeta, chegar na nave e fugir do planeta e da Chuva de Meteoros antes que o tempo acabe.
 
 ### Regras
-- Os jogadores têm um tempo de, no máximo, 2 minutos para completar o jogo. Na primeira fase, eles devem passar pelo obstáculos para pegar os primeiros itens, na segunda fase eles enfrentam outros desafios para pegarem as outras formas de vida do planeta, e o mesmo na terceira fase (quando correm em direção a nave). Na última fase, por outro lado, eles só podem se desviar dos asteróides enquanto controlam a nave. Se eles encostarem em alguma coisa em que não deveriam (como um meteoro) ou cair enquanto saltam nas plataformas, eles não morrem, mas precisam começar aquela fase do início.
+- Os dois jogadores, juntos,em cada fase, possuem 6 vidas. Na primeira fase, eles devem coletar todos os itens para a contrução da nave, antes de perderem todas as vidas ao encostar nos espinhos, nos morcegos, nas minhocas gogantes ou cair das plataformas (senão precisam voltar ao início a cada vida perdida), e assim consigam passar para a próxima fase. Na segunda fase, eles devem coletar todos os animais sem perder todas as vidas ao cair das plataformas (senão precisam voltar ao início a cada vida perdida). Na terceira fase, eles precisam pular entre as plataformas sem perder todas as vidas ao encostar nos meteoros (senão precisam voltar ao início a cada vida perdida). Na última fase, com uma nova jogabilidade, o player 1 atira, enquanto o player 2 movimenta, enquanto desviam dos asteróides durante 60 segundos sem perder todas as vidas (caso contrário perdem uma vida e o tempo volta ao início). O objetivo é chegar até o final da fase 4, sem perder todas as vidas.
 
 ### Personagens
-- Dois personagens de outro planeta, ambos com uma forma parecida com a humana e roupas simples característcas do planeta onde vivem. São personagens com uma identidade visual mais futurista.
+- Dois personagens de outro planeta, um com uma roupa branca e azul, e outro de aspecto verde.
 
 ### Artefatos
-- Os materiais que serão coletados no final da primeira fase para completá-la, e as outras formas de vida do planeta a serem pegos no final da segunda fase para completá-la.
+- Os materiais que serão coletados ao longo da primeira fase para completá-la, e as outras formas de vida do planeta a resgatados ao longo da segunda fase para completá-la.
 
 ### Fonte de receita
-- Arrecadar, pelo menos, R$ 500,00 por mês para cada desenvolvedor, o que equivale a R$ 1000,00 por mês ao todo, e R$ 12000,00 por ano.  
-- Vender mais tempo de partida para os jogadores.
-- Criar novas missões para os personagens, permitindo que haja propaganda paga entre cada missão. 
+- Arrecadar, pelo menos, R$ 250,00 por mês para cada desenvolvedor, o que equivale a R$ 500,00 por mês ao todo, e R$ 6.000,00 por ano.  
+- Vender fichas aos jogadores.
 - Vender acessórios com os personagens do jogo estampados, como canecas, camisetas, bonés e cadernos escolares, a medida que o jogo fosse se popularizando, engajando pessoas pelas redes sociais (como Instagram, Youtube e TikTok) a falarem e divulgarem o jogo.
-- Vender skins mais elaboradas para os dois personagens por um preço mais baixo, e deixando alguns modelos gratuitos disponíveis para os usuários se empolgarem com a ideia de trocar de skin nas partidas.
 
 ## GDD
 ### Visão geral
-Jogo 2D de plataforma com limite de tempo, onde dois seres alienígenas precisam coletar itens para construir uma nave e salvar espécies nativas antes da destruição do planeta por uma chuva de meteoros.
+Jogo 2D de plataforma com diversos desafios, onde dois seres alienígenas precisam coletar itens para construir uma nave e salvar espécies nativas antes da destruição do planeta por uma chuva de meteoros.
 
 ### Tema / Ambientação / Gênero
-Ficção científica, aventura, fantasia, plataforma 2D com mecânica, e tempo limitado.
+Ficção científica, aventura, fantasia, plataforma 2D.
 
 ### Resumo das Mecânicas Principais do Jogo
 ● Coleta de materiais com obstáculos e morte reiniciando fase
-● Captura de espécies com desafios específicos
+● Captura de espécies
 ● Fase de fuga com tempo regressivo
 ● Fase de pilotagem da nave (mudança de gameplay)
 ● Os personagens podem pular e andar para a direita e para a esquerda
-● Algumas plataformas podem ir para cima e para baixo
-● Algumas plataformas começam a cair a medida que o jogador fica em cima dela
 
 ### Plataformas direcionadas
-● Celular (Android e iOS)
+● Fliperama
 
 ### Modelo de monetização (Resumo/Documento)
 ● Tipo de monetização:
 
 ### Escopo do projeto
 #### Escala de tempo do jogo
-Partidas rápidas de até 2 minutos.
+Partidas de mais ou menos 20 minutos.
 
 ○ Qual o custo?
 Baixo custo inicial (desenvolvimento indie 2D).
@@ -104,28 +100,27 @@ Jogo: Influência na ideia de plataforma com gravidade diferenciada e temática 
 #### A apresentação rápida
 Dois alienígenas foram avisados por um ser divino de que o planeta em que vivem será destruído. Para sobreviver, precisam construir uma nave espacial e preservar algumas espécies animais em um jogo de plataforma intenso, com limite de tempo e múltiplas fases dinâmicas.
 Descrição do projeto (resumo)
-Dilúvio Espacial é um jogo 2D de plataforma com partidas rápidas e foco em pressão de tempo. Dois jogadores controlam, cada um, um ser alienígena, que precisam construir uma nave e salvar espécies antes da destruição total do planeta.
+Dilúvio Espacial é um jogo 2D de plataforma com partidas complexas. Dois jogadores controlam, cada um, um ser alienígena, que precisam construir uma nave e salvar espécies antes da destruição total do planeta.
 O jogo mistura exploração, desafio de habilidade, coleta estratégica e mudança de gameplay na fase final de pilotagem espacial.
 Descrição detalhada do projeto
 O jogo começa com uma cutscene onde uma entidade divina avisa que o planeta será destruído por uma chuva de meteoros. Os protagonistas recebem a missão de construir uma nave e salvar algumas espécies nativas, antes que o tempo acabe.
-Na primeira missão, os jogadores exploram cavernas perigosas para coletar cristais energéticos e ligas metálicas necessárias para construir a nave. Os obstáculos incluem um cristal pontudo, uma criatura perigosa na caverna, plataformas e uma pedra se deslocando no chão.
-Na segunda missão, os jogadores entram em plataformas de pedra. Os desafios incluem plataformas instáveis, plataformas móveis, além das plataformas comuns. As espécies nativas a serem pegas são:
-·	Uma criatura quadrúpede luminosa herbívora.
-·	Uma ave flutuante com asas translúcidas.
-·	Um pequeno ser reptiliano subterrâneo.
+Na primeira missão, os jogadores exploram cavernas perigosas para coletar cristais energéticos e ligas metálicas necessárias para construir a nave. Os obstáculos incluem espinhos de pedra, criaturas perigosas na caverna e plataformas.
+Na segunda missão, os jogadores precisam coletar os animais sem cair das plataformas. As espécies nativas a serem pegas são:
+·	Uma lontra
+·	Um panda vermelho
+·	Um tatu cinza
+·	Um esquilo
 Após concluir tudo, inicia-se a fase de fuga com destruição do cenário, também com plataformas instáveis, as demais plataformas, meteoros caindo que podem acertar os jogadores e a tela que se movimenta sozinha, forçando os jogadores a irem o mais rápido possível para a tela não os alcançar. Por fim, ocorre a fase de pilotagem, desviando de asteroides até chegar ao novo planeta, onde um último cutscene revela que eles se infiltraram na terra e se esconderam nela.
 
 #### O que diferencia este projeto?
-● Partidas curtas e intensas de 2 minutos
-
 ● Mistura de plataforma com fase de nave
 
 ### Mecânicas principais do jogo (em detalhes)
 #### Coleta e Construção
 ○ Detalhes
-Os jogadores precisam avançar pelo cenário horizontal com obstáculos (pulando ou desviando de algo) e desafios específicos da fase (cristal pontudo, uma criatura perigosa e uma pedra se deslocando do chão para cima).
+Os jogadores precisam avançar pelo cenário horizontal com obstáculos (pulando ou desviando de algo) e desafios específicos da fase (espinhos de pedra pontudos, morcegos e minhocas perigosas e meteoros caindo).
 ○ Como funciona
-As plataformas ficam estáticas no mapa, mas não possui chão em baixo (se o jogador cair, precisa recomeçar a fase). Os jogadores precisam pular entre as plataformas, pular o cristal pontudo, e a pedra se deslocando, e ainda se desviar da criatura perigosa (pulando, ou esperando ela passar) .
+As plataformas ficam estáticas no mapa, mas não possui chão em baixo (se o jogador cair, precisa recomeçar a fase). Os jogadores precisam pular entre as plataformas, pular o espinho pontudo, e ainda se desviar das criaturas perigosas (pulando, ou esperando ela passar) .
 
 #### Captura de Espécies
 ○ Detalhes
