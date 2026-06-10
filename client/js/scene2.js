@@ -111,7 +111,7 @@ class scene2 extends Phaser.Scene {
     if (!this.anims.exists("stopped_vd")) {
       this.anims.create({
         key: "stopped_vd",
-        frames: this.anims.generateFrameNumbers("vd", { start: 0, end: 5 }),
+        frames: this.anims.generateFrameNumbers("vd", { start: 0, end: 3 }),
         frameRate: 10,
         repeat: -1,
       });

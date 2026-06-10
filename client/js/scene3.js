@@ -141,7 +141,7 @@ class scene3 extends Phaser.Scene {
     if (!this.anims.exists("stopped_vd")) {
       this.anims.create({
         key: "stopped_vd",
-        frames: this.anims.generateFrameNumbers("vd", { start: 0, end: 5 }),
+        frames: this.anims.generateFrameNumbers("vd", { start: 0, end: 4 }),
         frameRate: 10,
         repeat: -1,
       });
@@ -150,7 +150,7 @@ class scene3 extends Phaser.Scene {
     if (!this.anims.exists("walk_vd")) {
       this.anims.create({
         key: "walk_vd",
-        frames: this.anims.generateFrameNumbers("vd", { start: 6, end: 11 }),
+        frames: this.anims.generateFrameNumbers("vd", { start: 5, end: 11 }),
         frameRate: 10,
         repeat: -1,
       });

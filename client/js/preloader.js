@@ -29,6 +29,7 @@ class preloader extends Phaser.Scene {
     this.load.image("cutscene-5", "cutscenes/5.png");
     this.load.image("cutscene-6", "cutscenes/6.png");
     this.load.image("cutscene-7", "cutscenes/7.png");
+    this.load.image("gameover", "cutscenes/gameover.png");
 
     this.load.image("background3", "cave/background3.png");
     this.load.image("background1", "cave/background1.png");

@@ -17,6 +17,8 @@ class asteroids extends Phaser.Scene {
   }
 
   create() {
+    this.add.image(160, 120, "gameover");
+
     this.physics.world.gravity.y = 0;
 
     this.background = this.add.tileSprite(160, 120, 320, 240, "background");
