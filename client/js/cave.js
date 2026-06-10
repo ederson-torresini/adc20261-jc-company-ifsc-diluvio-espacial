@@ -158,13 +158,13 @@ class cave extends Phaser.Scene {
     this.worms = this.physics.add.group();
 
     // Minhoca 1
-    this.worms.create(1040, 400, "minhocadaterra");
+    this.worms.create(1040, 400, "minhocadaterra").body.setSize(30, 64).setOffset(16, 0);
 
     // Minhoca 2
-    this.worms.create(1264, 400, "minhocadaterra");
+    this.worms.create(1264, 400, "minhocadaterra").body.setSize(30, 64).setOffset(16, 0);
 
     // Minhoca 3
-    this.worms.create(2112, 400, "minhocadaterra");
+    this.worms.create(2112, 400, "minhocadaterra").body.setSize(30, 64).setOffset(16, 0);
 
     this.worms.children.iterate((worm) => {
       worm.play("worm", true);
