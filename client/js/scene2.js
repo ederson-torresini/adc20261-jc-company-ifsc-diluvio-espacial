@@ -45,7 +45,6 @@ class scene2 extends Phaser.Scene {
     this.music.play();
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.levelHeight = map.heightInPixels;
 
     this.playerSpeed = 200;
@@ -146,7 +145,15 @@ class scene2 extends Phaser.Scene {
     porta.setCollisionByProperty({ collides: true });
     this.physics.add.collider(this.player2, porta);
 
-    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
+    this.cameras.main.centerOn(this.spawnPoint.x, this.spawnPoint.y);
+    this.time.addEvent({
+      delay: 25,
+      callback: () => {
+        this.cameras.main.scrollX += 1;
+      },
+      callbackScope: this,
+      loop: true,
+    });
 
     // Criar animações dos animais
     if (!this.anims.exists("cinza_anim")) {
@@ -359,6 +366,9 @@ class scene2 extends Phaser.Scene {
 
     this.player2.setPosition(this.spawnPoint.x + 100, this.spawnPoint.y);
     this.player2.setVelocity(0, 0);
+
+    this.cameras.main.centerOn(this.spawnPoint.x, this.spawnPoint.y);
+    this.cameras.main.scrollX = 290;
   }
 
   respawnPlayer() {
