@@ -57,7 +57,7 @@ class cave extends Phaser.Scene {
       0,
     );
     this.player.setCollideWorldBounds(true);
-    this.player.body.setSize(20, 46).setOffset(22, 16);
+    this.player.body.setSize(16,32).setOffset(26,32)
     this.player.setGravityY(850);
     this.player.setBounce(0);
 
@@ -97,7 +97,7 @@ class cave extends Phaser.Scene {
       0,
     );
     this.player2.setCollideWorldBounds(true);
-    this.player2.body.setSize(20, 46).setOffset(22, 16);
+    this.player2.body.setSize(16, 32).setOffset(26, 32);
     this.player2.setGravityY(850);
     this.player2.setBounce(0);
 
