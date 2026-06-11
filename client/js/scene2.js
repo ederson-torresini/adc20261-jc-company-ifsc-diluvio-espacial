@@ -4,16 +4,16 @@ class scene2 extends Phaser.Scene {
   }
 
   create() {
-    const map = this.make.tilemap({ key: 'map' });
+    const map = this.make.tilemap({ key: "map" });
 
-    const CloudsBack = map.addTilesetImage('CloudsBack', 'CloudsBack');
-    const BGFront = map.addTilesetImage('BGFront', 'BGFront');
-    const CloudsFront = map.addTilesetImage('CloudsFront', 'CloudsFront');
-    const Tileset = map.addTilesetImage('Tileset', 'Tileset');
-    const TilesExamples = map.addTilesetImage('TilesExamples', 'TilesExamples');
-    const Trees = map.addTilesetImage('Trees', 'Trees');
-    const props2 = map.addTilesetImage('props2', 'props2');
-    const mainlev_build = map.addTilesetImage('mainlev_build', 'mainlev_build');
+    const CloudsBack = map.addTilesetImage("CloudsBack", "CloudsBack");
+    const BGFront = map.addTilesetImage("BGFront", "BGFront");
+    const CloudsFront = map.addTilesetImage("CloudsFront", "CloudsFront");
+    const Tileset = map.addTilesetImage("Tileset", "Tileset");
+    const TilesExamples = map.addTilesetImage("TilesExamples", "TilesExamples");
+    const Trees = map.addTilesetImage("Trees", "Trees");
+    const props2 = map.addTilesetImage("props2", "props2");
+    const mainlev_build = map.addTilesetImage("mainlev_build", "mainlev_build");
     const tilesets = [
       CloudsBack,
       BGFront,
@@ -35,11 +35,11 @@ class scene2 extends Phaser.Scene {
       return indices[occurrence] ?? -1;
     };
 
-    const fundo20 = map.createLayer('fundo20', tilesets);
-    const fundo21 = map.createLayer('fundo21', tilesets);
-    const fundo22 = map.createLayer('fundo22', tilesets);
-    const terra = map.createLayer('terra', tilesets);
-    const porta = map.createLayer('portacaverna', tilesets);
+    const fundo20 = map.createLayer("fundo20", tilesets);
+    const fundo21 = map.createLayer("fundo21", tilesets);
+    const fundo22 = map.createLayer("fundo22", tilesets);
+    const terra = map.createLayer("terra", tilesets);
+    const porta = map.createLayer("portacaverna", tilesets);
 
     this.music = this.sound.add("aventura_fase_inteira", { loop: true });
     this.music.play();
@@ -52,7 +52,12 @@ class scene2 extends Phaser.Scene {
     this.playerJump = -520;
 
     this.spawnPoint = { x: 450, y: 1200 };
-    this.player = this.physics.add.sprite(this.spawnPoint.x, this.spawnPoint.y, "az", 0);
+    this.player = this.physics.add.sprite(
+      this.spawnPoint.x,
+      this.spawnPoint.y,
+      "az",
+      0,
+    );
     this.player.setCollideWorldBounds(true);
     this.player.body.setSize(20, 46).setOffset(22, 16);
     this.player.setGravityY(850);
@@ -78,10 +83,14 @@ class scene2 extends Phaser.Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-    this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.keySpace = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE,
+    );
     this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    this.keyEnter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+    this.keyEnter = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ENTER,
+    );
 
     if (!this.anims.exists("stopped")) {
       this.anims.create({
@@ -102,7 +111,12 @@ class scene2 extends Phaser.Scene {
     }
 
     // Criar segundo jogador
-    this.player2 = this.physics.add.sprite(this.spawnPoint.x + 100, this.spawnPoint.y, "vd", 0);
+    this.player2 = this.physics.add.sprite(
+      this.spawnPoint.x + 100,
+      this.spawnPoint.y,
+      "vd",
+      0,
+    );
     this.player2.setCollideWorldBounds(true);
     this.player2.body.setSize(20, 46).setOffset(22, 16);
     this.player2.setGravityY(850);
@@ -147,7 +161,10 @@ class scene2 extends Phaser.Scene {
     if (!this.anims.exists("esquilo_anim")) {
       this.anims.create({
         key: "esquilo_anim",
-        frames: this.anims.generateFrameNumbers("esquilo", { start: 0, end: 7 }),
+        frames: this.anims.generateFrameNumbers("esquilo", {
+          start: 0,
+          end: 7,
+        }),
         frameRate: 5,
         repeat: -1,
       });
@@ -156,7 +173,10 @@ class scene2 extends Phaser.Scene {
     if (!this.anims.exists("panda_vermelho_anim")) {
       this.anims.create({
         key: "panda_vermelho_anim",
-        frames: this.anims.generateFrameNumbers("panda_vermelho", { start: 0, end: 7 }),
+        frames: this.anims.generateFrameNumbers("panda_vermelho", {
+          start: 0,
+          end: 7,
+        }),
         frameRate: 10,
         repeat: -1,
       });
@@ -250,7 +270,8 @@ class scene2 extends Phaser.Scene {
     }
 
     // Movement logic unified with `cave` scene
-    const pad = this.input.gamepad.total > 0 ? this.input.gamepad.gamepads[0] : null;
+    const pad =
+      this.input.gamepad.total > 0 ? this.input.gamepad.gamepads[0] : null;
     let xAxis = 0;
     let jumpPressed = false;
 
@@ -263,7 +284,8 @@ class scene2 extends Phaser.Scene {
       } else if (this.cursors.right.isDown) {
         xAxis = 1;
       }
-      jumpPressed = this.cursors.up.isDown || this.keyW.isDown || this.keySpace.isDown;
+      jumpPressed =
+        this.cursors.up.isDown || this.keyW.isDown || this.keySpace.isDown;
     }
 
     this.player.setVelocityX(xAxis * this.playerSpeed);
@@ -275,13 +297,17 @@ class scene2 extends Phaser.Scene {
       this.player.play("stopped", true);
     }
 
-    if (jumpPressed && (this.player.body.blocked.down || this.player.body.touching.down)) {
+    if (
+      jumpPressed &&
+      (this.player.body.blocked.down || this.player.body.touching.down)
+    ) {
       this.player.setVelocityY(this.playerJump);
       this.sound.play("pulo");
     }
 
     // Controles do player 2 (gamepad ou A/D + W/Space/Enter)
-    const pad2 = this.input.gamepad.total > 1 ? this.input.gamepad.gamepads[1] : null;
+    const pad2 =
+      this.input.gamepad.total > 1 ? this.input.gamepad.gamepads[1] : null;
     let xAxis2 = 0;
     let jumpPressed2 = false;
 
@@ -294,7 +320,8 @@ class scene2 extends Phaser.Scene {
       } else if (this.keyD.isDown) {
         xAxis2 = 1;
       }
-      jumpPressed2 = this.keyW.isDown || this.keySpace.isDown || this.keyEnter.isDown;
+      jumpPressed2 =
+        this.keyW.isDown || this.keySpace.isDown || this.keyEnter.isDown;
     }
 
     this.player2.setVelocityX(xAxis2 * this.playerSpeed);
@@ -306,7 +333,10 @@ class scene2 extends Phaser.Scene {
       this.player2.play("stopped_vd", true);
     }
 
-    if (jumpPressed2 && (this.player2.body.blocked.down || this.player2.body.touching.down)) {
+    if (
+      jumpPressed2 &&
+      (this.player2.body.blocked.down || this.player2.body.touching.down)
+    ) {
       this.player2.setVelocityY(this.playerJump);
       this.sound.play("pulo");
     }
@@ -368,7 +398,9 @@ class scene2 extends Phaser.Scene {
     this.collectedAnimals++;
     this.animals.remove(animal, true, true);
 
-    console.log(`${type} coletado! Total: ${this.collectedAnimals}/${this.totalAnimals}`);
+    console.log(
+      `${type} coletado! Total: ${this.collectedAnimals}/${this.totalAnimals}`,
+    );
 
     // Verificar se todos foram coletados
     if (this.collectedAnimals === this.totalAnimals) {
@@ -382,8 +414,6 @@ class scene2 extends Phaser.Scene {
       });
     }
   }
-
-
 }
 
 export default scene2;

@@ -70,8 +70,6 @@ class asteroids extends Phaser.Scene {
     this.laserBeams = this.physics.add.group();
     this.canShoot = true;
 
-
-
     this.asteroids = this.physics.add.group();
     this.newAsteroid = true;
 

@@ -118,7 +118,10 @@ class preloader extends Phaser.Scene {
     this.load.audio("laser", "asteroids/laser.mp3");
     this.load.audio("explosion", "asteroids/explosion.mp3");
     this.load.audio("pulo", "personagens/pulo.mp3");
-    this.load.audio("aventura_fase_inteira", "personagens/aventura_fase_inteira.mp3");
+    this.load.audio(
+      "aventura_fase_inteira",
+      "personagens/aventura_fase_inteira.mp3",
+    );
     this.load.audio("game_over", "personagens/game_over.mp3");
     this.load.audio("som_morcego", "cave/som_morcego.mp3");
     this.load.audio("coletou_item", "cave/coletou_item.mp3");

@@ -133,7 +133,9 @@ class cave extends Phaser.Scene {
     );
     this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    this.keyEnter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+    this.keyEnter = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ENTER,
+    );
 
     this.pad = this.input.gamepad.gamepads[0] || null;
     this.pad2 = this.input.gamepad.gamepads[1] || null;
@@ -158,13 +160,22 @@ class cave extends Phaser.Scene {
     this.worms = this.physics.add.group();
 
     // Minhoca 1
-    this.worms.create(1040, 400, "minhocadaterra").body.setSize(30, 64).setOffset(16, 0);
+    this.worms
+      .create(1040, 400, "minhocadaterra")
+      .body.setSize(30, 64)
+      .setOffset(16, 0);
 
     // Minhoca 2
-    this.worms.create(1264, 400, "minhocadaterra").body.setSize(30, 64).setOffset(16, 0);
+    this.worms
+      .create(1264, 400, "minhocadaterra")
+      .body.setSize(30, 64)
+      .setOffset(16, 0);
 
     // Minhoca 3
-    this.worms.create(2112, 400, "minhocadaterra").body.setSize(30, 64).setOffset(16, 0);
+    this.worms
+      .create(2112, 400, "minhocadaterra")
+      .body.setSize(30, 64)
+      .setOffset(16, 0);
 
     this.worms.children.iterate((worm) => {
       worm.play("worm", true);
@@ -384,7 +395,8 @@ class cave extends Phaser.Scene {
       } else if (this.keyD.isDown) {
         xAxis2 = 1;
       }
-      jumpPressed2 = this.keyW.isDown || this.keySpace.isDown || this.keyEnter.isDown;
+      jumpPressed2 =
+        this.keyW.isDown || this.keySpace.isDown || this.keyEnter.isDown;
     }
 
     this.player2.setVelocityX(xAxis2 * this.playerSpeed);
@@ -463,7 +475,9 @@ class cave extends Phaser.Scene {
     this.collectedArtifacts++;
     this.artifacts.remove(artifact, true, true);
 
-    console.log(`${type} coletado! Total: ${this.collectedArtifacts}/${this.totalArtifacts}`);
+    console.log(
+      `${type} coletado! Total: ${this.collectedArtifacts}/${this.totalArtifacts}`,
+    );
 
     // Verificar se todos foram coletados
     if (this.collectedArtifacts === this.totalArtifacts) {
@@ -477,8 +491,6 @@ class cave extends Phaser.Scene {
       });
     }
   }
-
-
 }
 
 export default cave;
