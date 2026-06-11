@@ -55,9 +55,9 @@ class cave extends Phaser.Scene {
       this.spawnPoint.y,
       "az",
       0,
-    );
+    )
     this.player.setCollideWorldBounds(true);
-    this.player.body.setSize(16,32).setOffset(26,32)
+    this.player.body.setSize(16, 32).setOffset(26, 32);
     this.player.setGravityY(850);
     this.player.setBounce(0);
 
@@ -100,7 +100,7 @@ class cave extends Phaser.Scene {
     this.player2.body.setSize(16, 32).setOffset(26, 32);
     this.player2.setGravityY(850);
     this.player2.setBounce(0);
-
+    
     if (!this.anims.exists("stopped_vd")) {
       this.anims.create({
         key: "stopped_vd",
@@ -123,8 +123,6 @@ class cave extends Phaser.Scene {
     this.physics.add.collider(this.player2, this.espinhos, () =>
       this.respawnPlayer2(),
     );
-
-    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -414,6 +412,54 @@ class cave extends Phaser.Scene {
     ) {
       this.player2.setVelocityY(this.playerJump);
       this.sound.play("pulo");
+    }
+
+    if (this.player && this.player2) {
+      // Câmera centrada entre os dois jogadores
+      const cameraX = (this.player.x + this.player2.x) / 2;
+      const cameraY = (this.player.y + this.player2.y) / 2;
+
+      const cameraWidth = this.cameras.main.width;
+      const cameraHeight = this.cameras.main.height;
+
+      // Limites da câmera
+      const minX = cameraWidth / 2;
+      const maxX = this.map.widthInPixels - cameraWidth / 2;
+      const minY = cameraHeight / 2;
+      const maxY = this.map.heightInPixels - cameraHeight / 2;
+
+      // Posição da câmera restrita dentro dos limites
+      const constrainedX = Phaser.Math.Clamp(cameraX, minX, maxX);
+      const constrainedY = Phaser.Math.Clamp(cameraY, minY, maxY);
+
+      this.cameras.main.centerOn(constrainedX, constrainedY);
+
+      // Colisão dos personagens com os limites da câmera
+      const cameraLeftBound = constrainedX - cameraWidth / 2;
+      const cameraRightBound = constrainedX + cameraWidth / 2;
+      const cameraTopBound = constrainedY - cameraHeight / 2;
+      const cameraBottomBound = constrainedY + cameraHeight / 2;
+
+      const playerWidth = this.player.width / 2;
+      const playerHeight = this.player.height / 2;
+
+      // Bloquear player1
+      if (this.player.x - playerWidth < cameraLeftBound) {
+        this.player.x = cameraLeftBound + playerWidth;
+        this.player.setVelocityX(0);
+      } else if (this.player.x + playerWidth > cameraRightBound) {
+        this.player.x = cameraRightBound - playerWidth;
+        this.player.setVelocityX(0);
+      }
+
+      // Bloquear player2
+      if (this.player2.x - playerWidth < cameraLeftBound) {
+        this.player2.x = cameraLeftBound + playerWidth;
+        this.player2.setVelocityX(0);
+      } else if (this.player2.x + playerWidth > cameraRightBound) {
+        this.player2.x = cameraRightBound - playerWidth;
+        this.player2.setVelocityX(0);
+      }
     }
   }
 
