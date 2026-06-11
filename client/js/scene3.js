@@ -107,7 +107,9 @@ class scene3 extends Phaser.Scene {
     );
     this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    this.keyEnter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+    this.keyEnter = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ENTER,
+    );
 
     if (!this.anims.exists("stopped")) {
       this.anims.create({
@@ -286,7 +288,8 @@ class scene3 extends Phaser.Scene {
       } else if (this.keyD.isDown) {
         xAxis2 = 1;
       }
-      jumpPressed2 = this.keyW.isDown || this.keySpace.isDown || this.keyEnter.isDown;
+      jumpPressed2 =
+        this.keyW.isDown || this.keySpace.isDown || this.keyEnter.isDown;
     }
 
     this.player2.setVelocityX(xAxis2 * this.playerSpeed);
@@ -309,12 +312,14 @@ class scene3 extends Phaser.Scene {
     // Sistema de spawn dinâmico de meteoros
     if (this.newAsteroid) {
       const cameraLeft = this.cameras.main.worldView.x;
-      const cameraRight = this.cameras.main.worldView.x + this.cameras.main.worldView.width;
+      const cameraRight =
+        this.cameras.main.worldView.x + this.cameras.main.worldView.width;
       const cameraTop = this.cameras.main.worldView.y;
 
       // Verificar se está em zona de segurança
       const isInTopSafeZone = cameraTop < this.safeZoneTopHeight;
-      const isInBottomSafeZone = cameraTop > this.levelHeight - this.safeZoneBottomHeight;
+      const isInBottomSafeZone =
+        cameraTop > this.levelHeight - this.safeZoneBottomHeight;
 
       // Só spawnar se NÃO estiver em zona de segurança
       if (!isInTopSafeZone && !isInBottomSafeZone) {
@@ -348,9 +353,11 @@ class scene3 extends Phaser.Scene {
     // Remover meteoros que saem da tela
     const asteroidsOnScene = this.asteroids.getChildren();
     asteroidsOnScene.forEach((asteroid) => {
-      const cameraBottom = this.cameras.main.worldView.y + this.cameras.main.worldView.height;
+      const cameraBottom =
+        this.cameras.main.worldView.y + this.cameras.main.worldView.height;
       const cameraLeft = this.cameras.main.worldView.x;
-      const cameraRight = this.cameras.main.worldView.x + this.cameras.main.worldView.width;
+      const cameraRight =
+        this.cameras.main.worldView.x + this.cameras.main.worldView.width;
 
       if (
         asteroid.y > cameraBottom + 100 ||
